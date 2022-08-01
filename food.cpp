@@ -10,5 +10,6 @@ FrameFood Food::toFrameFood() const
     FrameFood frameFood;
     frameFood.id = m_id;
     frameFood.value = m_value;
+    frameFood.position = m_position;
     return frameFood;
 }

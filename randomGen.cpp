@@ -1,5 +1,7 @@
 #include "randomGen.h"
 
+std::random_device RandomGen::rd;
+std::mt19937 RandomGen::gen;
 
 void RandomGen::initialize()
 {

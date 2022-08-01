@@ -9,7 +9,7 @@
 class Game
 {
 public:
-  void run(std::vector<Frame>& frames, bool recordRun);
+    std::vector<Frame> run(bool recordRun);
 private:
     void addFrame(std::vector<Frame>& frames);
     void initialize();

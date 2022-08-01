@@ -7,7 +7,6 @@
 
 struct Frame
 {
-    float t = 0;
     std::vector<FrameFood> food;
     std::vector<FrameCreature> creatures;
 };

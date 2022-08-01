@@ -8,7 +8,7 @@ struct FrameFood
 {
     size_t id;
     int value;
-
+    Vec position;
 };
 
 class Food

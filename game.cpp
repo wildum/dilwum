@@ -2,16 +2,21 @@
 #include "config.h"
 #include "randomGen.h"
 #include "factory.h"
+#include "tools.h"
 #include <algorithm>
 
 void Game::initialize()
 {
+    Tools::log("start game initialization");
     initFood();
     initCreatures();
+    Tools::log("game initialization done");
 }
 
-void Game::run(std::vector<Frame>& frames, bool recordRun)
+std::vector<Frame> Game::run(bool recordRun)
 {
+    std::vector<Frame> frames;
+
     initialize();
 
     if (recordRun)
@@ -20,6 +25,7 @@ void Game::run(std::vector<Frame>& frames, bool recordRun)
     }
 
     int turn = 0;
+    Tools::log("game started");
     while (turn < config::GAME_TURN && !m_creatures.empty())
     {
         updateCreatures();
@@ -30,7 +36,8 @@ void Game::run(std::vector<Frame>& frames, bool recordRun)
             addFrame(frames);
         }
     }
-    
+    Tools::log("game ended");
+    return frames;
 }
 
 void Game::addFrame(std::vector<Frame>& frames)
@@ -40,6 +47,7 @@ void Game::addFrame(std::vector<Frame>& frames)
         frame.creatures.push_back(creature.toFrameCreature());
     for (const auto& food : m_food)
         frame.food.push_back(food.toFrameFood());
+    frames.push_back(frame);
 }
 
 void Game::initFood()
@@ -79,5 +87,5 @@ void Game::updateCreatures()
             creature.pickRandomAction();
         }
     }
-    m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [](const auto& creature){return !creature.isAlive();}));
+    m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [](auto& creature){return !creature.isAlive();}));
 }

@@ -2,7 +2,7 @@
 #include "randomGen.h"
 #include "config.h"
 
-size_t idCounter = 0;
+size_t Factory::idCounter = 0;
 
 Food Factory::createRandomFood()
 {
