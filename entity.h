@@ -15,9 +15,9 @@ struct CreatureEntity
     {
         id = frameCreature.id;
         shape.setTexture(texture); // could make it smooth
-        shape.setOrigin(sf::Vector2f(16.f, 22.f));
+        shape.setOrigin(sf::Vector2f(10.f, 16.f));
         shape.setPosition(frameCreature.position.x, frameCreature.position.y);
-        shape.setRotation(frameCreature.direction.getAngleWithyAxis());
+        shape.setRotation(frameCreature.angle);
     }
 };
 

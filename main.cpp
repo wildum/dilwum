@@ -1,7 +1,13 @@
 #include "environment.h"
+#include "tests/test.h"
+#include "tools.h"
+#include <string.h>
 
-int main()
+int main(int argc, char *argv[])
 {
-    Environment::run();
+    if (argc == 2 && strcmp(argv[1], "test") == 0)
+        test::runAllTests();
+    else
+        Environment::run();
     return 0;
 }

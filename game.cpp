@@ -7,10 +7,10 @@
 
 void Game::initialize()
 {
-    Tools::log("start game initialization");
+    tools::log("start game initialization");
     initFood();
     initCreatures();
-    Tools::log("game initialization done");
+    tools::log("game initialization done");
 }
 
 std::vector<Frame> Game::run(bool recordRun)
@@ -25,7 +25,7 @@ std::vector<Frame> Game::run(bool recordRun)
     }
 
     int turn = 0;
-    Tools::log("game started");
+    tools::log("game started");
     while (turn < config::GAME_TURN && !m_creatures.empty())
     {
         updateCreatures();
@@ -35,8 +35,9 @@ std::vector<Frame> Game::run(bool recordRun)
         {
             addFrame(frames);
         }
+        turn++;
     }
-    Tools::log("game ended");
+    tools::log("game ended");
     return frames;
 }
 
@@ -87,5 +88,5 @@ void Game::updateCreatures()
             creature.pickRandomAction();
         }
     }
-    m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [](auto& creature){return !creature.isAlive();}));
+    m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [&](auto& creature){return !creature.isAlive();}), m_creatures.end());
 }

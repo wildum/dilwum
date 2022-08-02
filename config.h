@@ -13,7 +13,7 @@ namespace config
     const int CREATURE_RADIUS = 9;
     const int CREATURE_POP_NUMBER = 100;
     const int CREATURE_HEALTH = 100;
-    const int CREATURE_SPEED = 3;
+    const int CREATURE_SPEED = 6;
     const int CREATURE_ROTATION_DEGREE = 30;
 
     const int FOOD_NUMBER_MIN = 20;
@@ -21,5 +21,7 @@ namespace config
     const int FOOD_VALUE_MIN = 5;
     const int FOOD_VALUE_MAX = 50;
     const int FOOD_RADIUS = 20;
+
+    const float EPSILON = 0.000001;
 }
 #endif

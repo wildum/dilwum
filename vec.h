@@ -2,6 +2,7 @@
 #define VEC
 
 #include <math.h>
+#include "tools.h"
 
 class Vec
 {
@@ -9,6 +10,11 @@ public:
     Vec() : x(0), y(0){}; 
     Vec(float ix, float iy) : x(ix), y(iy){};
     Vec(int ix, int iy) : x(ix), y(iy){};
+
+    friend bool operator== (const Vec& c1, const Vec& c2);
+    friend bool operator!= (const Vec& c1, const Vec& c2);
+    friend std::ostream& operator<< (std::ostream& outs, const Vec& c2);
+
     float x, y;
     float length() const
     {
@@ -26,29 +32,6 @@ public:
             x = x / len;
             y = y / len;
         }
-    }
-    void rotateAroundPoint(const Vec& p, int angle)
-    {
-        float s = sin(angle);
-        float c = cos(angle);
-
-        x -= p.x;
-        y -= p.y;
-
-        float xnew = x * c - y * s;
-        float ynew = x * s + y * c;
-
-        x = xnew + p.x;
-        y = ynew + p.y;
-    }
-
-    float getAngleWithyAxis() const
-    {
-        if (!notNull())
-            return 0;
-        float len = length();
-        float angle = acos(y/len) * 180/M_PI;
-        return x > 0 ? -angle : angle;
     }
 
     static Vec lerp(const Vec& v0, const Vec& v1, float t)

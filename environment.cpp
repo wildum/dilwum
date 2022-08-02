@@ -10,10 +10,10 @@ sf::Texture Environment::creatureTexture;
 
 void Environment::initialize()
 {
-    Tools::log("start initialization");
+    tools::log("start initialization");
     RandomGen::initialize();
     loadAssets();
-    Tools::log("initialization done");
+    tools::log("initialization done");
 }
 
 void Environment::run()
@@ -39,7 +39,7 @@ void Environment::run()
         auto currentFrameIterator = frames.begin();
         auto nextFrameIterator = currentFrameIterator + 1;
         float turnTime = 0;
-        Tools::log("start displaying");
+        tools::log("start displaying");
         while (window.isOpen() && nextFrameIterator != frames.end())
         {
             float dt = deltaClock.restart().asSeconds();
@@ -50,7 +50,7 @@ void Environment::run()
                 nextFrameIterator++;
                 turnTime -= config::TURN_TIME_SECOND;
                 turnCount++;
-                Tools::log(std::to_string(turnCount));
+                tools::log(std::to_string(turnCount));
 
                 if (nextFrameIterator == frames.end())
                     break;
@@ -66,11 +66,11 @@ void Environment::run()
             updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / config::TURN_TIME_SECOND);
             window.display();
         }
-        Tools::log("end of display");
+        tools::log("end of display");
     }
     else
     {
-        Tools::log("not recording ?");
+        tools::log("not recording ?");
     }
 }
 
@@ -81,25 +81,6 @@ void Environment::updateEntities(sf::RenderWindow& window,
     const std::vector<Frame>::iterator& nextFrameIterator,
     float time)
 {
-    for (const auto& nextCreature : nextFrameIterator->creatures)
-    {
-        auto currentCreature = std::find_if(currentFrameIterator->creatures.begin(), currentFrameIterator->creatures.end(), [&nextCreature](const auto& creatureCurrent){return creatureCurrent.id == nextCreature.id;});
-
-        if (currentCreature != currentFrameIterator->creatures.end())
-        {
-            auto creatureEntity = creatures.find(nextCreature.id);
-            Vec newPosition = Vec::lerp(currentCreature->position, nextCreature.position, time);
-            Vec newDirection = Vec::lerp(currentCreature->direction, nextCreature.direction, time);
-            creatureEntity->second.shape.setPosition(newPosition.x, newPosition.y);
-            creatureEntity->second.shape.setRotation(newDirection.getAngleWithyAxis());
-            window.draw(creatureEntity->second.shape);
-        }
-        else
-        {
-            auto it = creatures.insert({nextCreature.id, {nextCreature, creatureTexture}});
-            window.draw(it.first->second.shape);
-        }
-    }
     for (const auto& foodNext : nextFrameIterator->food)
     {
         auto foodCurrent = std::find_if(currentFrameIterator->food.begin(), currentFrameIterator->food.end(), [&foodNext](const auto& foodCurrent){return foodCurrent.id == foodNext.id;});
@@ -112,6 +93,25 @@ void Environment::updateEntities(sf::RenderWindow& window,
         else
         {
             auto it = foods.insert({foodNext.id, {foodNext}});
+            window.draw(it.first->second.shape);
+        }
+    }
+    for (const auto& nextCreature : nextFrameIterator->creatures)
+    {
+        auto currentCreature = std::find_if(currentFrameIterator->creatures.begin(), currentFrameIterator->creatures.end(), [&nextCreature](const auto& creatureCurrent){return creatureCurrent.id == nextCreature.id;});
+
+        if (currentCreature != currentFrameIterator->creatures.end())
+        {
+            auto creatureEntity = creatures.find(nextCreature.id);
+            Vec newPosition = Vec::lerp(currentCreature->position, nextCreature.position, time);
+            float newDirection = tools::lerp(currentCreature->angle, nextCreature.angle, time);
+            creatureEntity->second.shape.setPosition(newPosition.x, newPosition.y);
+            creatureEntity->second.shape.setRotation(newDirection);
+            window.draw(creatureEntity->second.shape);
+        }
+        else
+        {
+            auto it = creatures.insert({nextCreature.id, {nextCreature, creatureTexture}});
             window.draw(it.first->second.shape);
         }
     }
@@ -141,9 +141,9 @@ void Environment::loadAssets()
 {
     if (!Environment::creatureTexture.loadFromFile("assets/creature.png"))
     {
-        Tools::log("cant load the image !");
+        tools::log("cant load the image !");
         return;
     }
-    Tools::log("assets loaded");
+    tools::log("assets loaded");
     //creatureTexture.update(Environment::creatureImage);
 }
