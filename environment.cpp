@@ -2,11 +2,14 @@
 #include "tools.h"
 #include "game.h"
 #include "randomGen.h"
+#include "creatureEntity.h"
+#include "foodEntity.h"
 
 #include <SFML/Graphics.hpp>
 
 sf::Image Environment::creatureImage;
 sf::Texture Environment::creatureTexture;
+sf::Font Environment::debugFont;
 
 void Environment::initialize()
 {
@@ -87,14 +90,15 @@ void Environment::updateEntities(sf::RenderWindow& window,
 
         if (foodCurrent != currentFrameIterator->food.end())
         {
-            auto creatureEntity = foods.find(foodNext.id);
-            creatureEntity->second.updateColor(foodNext);
-            window.draw(creatureEntity->second.shape);
+            auto foodEntity = foods.find(foodNext.id);
+            foodEntity->second.updateColor(foodNext);
+            foodEntity->second.updateText(foodNext.value);
+            foodEntity->second.draw(window);
         }
         else
         {
-            auto it = foods.insert({foodNext.id, {foodNext}});
-            window.draw(it.first->second.shape);
+            auto it = foods.insert({foodNext.id, {foodNext, debugFont}});
+            it.first->second.draw(window);
         }
     }
     for (const auto& nextCreature : nextFrameIterator->creatures)
@@ -106,14 +110,15 @@ void Environment::updateEntities(sf::RenderWindow& window,
             auto creatureEntity = creatures.find(nextCreature.id);
             Vec newPosition = Vec::lerp(currentCreature->position, nextCreature.position, time);
             float newDirection = tools::lerp(currentCreature->angle, nextCreature.angle, time);
-            creatureEntity->second.shape.setPosition(newPosition.x, newPosition.y);
+            creatureEntity->second.move(newPosition);
             creatureEntity->second.shape.setRotation(newDirection);
-            window.draw(creatureEntity->second.shape);
+            creatureEntity->second.updateText(nextCreature.health);
+            creatureEntity->second.draw(window);
         }
         else
         {
-            auto it = creatures.insert({nextCreature.id, {nextCreature, creatureTexture}});
-            window.draw(it.first->second.shape);
+            auto it = creatures.insert({nextCreature.id, {nextCreature, creatureTexture, debugFont}});
+            it.first->second.draw(window);
         }
     }
 }
@@ -123,7 +128,7 @@ std::unordered_map<size_t, CreatureEntity> Environment::initCreaturesEntities(sf
     std::unordered_map<size_t, CreatureEntity> creatureMap;
     for (const auto& creature : firstFrame.creatures)
     {
-        creatureMap.insert({creature.id, {creature, creatureTexture}});
+        creatureMap.insert({creature.id, {creature, creatureTexture, debugFont}});
     }
     return creatureMap;
 }
@@ -133,7 +138,7 @@ std::unordered_map<size_t, FoodEntity> Environment::initFoodEntities(sf::RenderW
     std::unordered_map<size_t, FoodEntity> foodMap;
     for (const auto& food : firstFrame.food)
     {
-        foodMap.insert({food.id, {food}});
+        foodMap.insert({food.id, {food, debugFont}});
     }
     return foodMap;
 }
@@ -143,6 +148,11 @@ void Environment::loadAssets()
     if (!Environment::creatureTexture.loadFromFile("assets/creature.png"))
     {
         tools::log("cant load the image !");
+        return;
+    }
+    if (!debugFont.loadFromFile("assets/arial.ttf"))
+    {
+        tools::log("cant load the font !");
         return;
     }
     tools::log("assets loaded");

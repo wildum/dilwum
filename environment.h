@@ -4,8 +4,9 @@
 #include <vector>
 #include <unordered_map>
 
+#include "creatureEntity.h"
+#include "foodEntity.h"
 #include "frame.h"
-#include "entity.h"
 
 class Environment
 {
@@ -13,6 +14,8 @@ public:
     static void run();
     static sf::Image creatureImage;
     static sf::Texture creatureTexture;
+    static sf::Font debugFont;
+    static bool debugMode;
 private:
     static void initialize();
     static void loadAssets();

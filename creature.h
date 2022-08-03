@@ -13,6 +13,7 @@ struct FrameCreature
     size_t id;
     Vec position;
     int angle;
+    int health;
 };
 
 class Creature

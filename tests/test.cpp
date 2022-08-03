@@ -13,6 +13,7 @@ namespace test
         creatureTurnRight();
         creatureTurnLeft();
         creatureEat();
+        tools::log("All tests ran fine");
     }
 
     void creatureMoveFoward()

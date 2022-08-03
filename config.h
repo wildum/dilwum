@@ -5,7 +5,7 @@
 
 namespace config
 {
-    const float TURN_TIME_SECOND = 1;
+    const float TURN_TIME_SECOND = 0.5;
 
     const int MAP_WIDTH = 2500;
     const int MAP_HEIGHT = 1000;

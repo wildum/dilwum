@@ -18,17 +18,17 @@ public:
 
     float x, y;
 
-    float length() const
+    inline float length() const
     {
         return sqrt((x*x) + (y*y));
     }
 
-    bool notNull() const
+    inline bool notNull() const
     {
         return x != 0 || y != 0;
     }
 
-    void normalize()
+    inline void normalize()
     {
         if (notNull())
         {
@@ -38,19 +38,31 @@ public:
         }
     }
 
-    float dist(const Vec& v)
+    inline float dist(const Vec& v)
     {
         return sqrt(squaredDist(v));
     }
 
-    float squaredDist(const Vec& v)
+    inline float squaredDist(const Vec& v)
     {
         return (v.x - x) * (v.x - x) + (v.y - y) * (v.y - y);
     }
 
-    static Vec lerp(const Vec& v0, const Vec& v1, float t)
+    inline static Vec lerp(const Vec& v0, const Vec& v1, float t)
     {
         return {v0.x + t * (v1.x - v0.x), v0.y + t * (v1.y - v0.y)};
+    }
+
+    void clip()
+    {
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+        if (x > config::MAP_WIDTH)
+            x = config::MAP_WIDTH;
+        if (y > config::MAP_HEIGHT)
+            y = config::MAP_HEIGHT;
     }
 };
 

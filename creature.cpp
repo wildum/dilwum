@@ -38,6 +38,7 @@ void Creature::performAction(std::vector<Food>& food)
     case MOVE_FORWARD:
         m_position.x += cos(tools::degreesToRadian(m_angle)) * m_speed;
         m_position.y += sin(tools::degreesToRadian(m_angle)) * m_speed;
+        m_position.clip();
         break;
     case EAT:
         eat(food);
@@ -52,5 +53,6 @@ FrameCreature Creature::toFrameCreature() const
     frameCreature.id = m_id;
     frameCreature.position = m_position;
     frameCreature.angle = m_angle;
+    frameCreature.health = m_health;
     return frameCreature;
 }
