@@ -62,7 +62,7 @@ void Environment::run()
                 if (event.type == sf::Event::Closed)
                     window.close();
             }
-            window.clear();
+            window.clear(config::BACKGROUND_COLOR);
             updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / config::TURN_TIME_SECOND);
             window.display();
         }
@@ -88,6 +88,7 @@ void Environment::updateEntities(sf::RenderWindow& window,
         if (foodCurrent != currentFrameIterator->food.end())
         {
             auto creatureEntity = foods.find(foodNext.id);
+            creatureEntity->second.updateColor(foodNext);
             window.draw(creatureEntity->second.shape);
         }
         else
@@ -145,5 +146,4 @@ void Environment::loadAssets()
         return;
     }
     tools::log("assets loaded");
-    //creatureTexture.update(Environment::creatureImage);
 }

@@ -29,8 +29,15 @@ struct FoodEntity
     {
         id = frameFood.id;
         shape.setRadius(config::FOOD_RADIUS);
-        shape.setFillColor(sf::Color::Green);
+        updateColor(frameFood);
         shape.setPosition(frameFood.position.x, frameFood.position.y);
+    }
+
+    void updateColor(const FrameFood& frameFood)
+    {
+        sf::Color color = config::FOOD_COLOR;
+        color.a = std::max(frameFood.value * 255 / config::FOOD_VALUE_MAX, 50);
+        shape.setFillColor(color);
     }
 };
 
