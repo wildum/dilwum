@@ -16,6 +16,7 @@ private:
     void initFood();
     void initCreatures();
     void updateCreatures();
+    void updateFood();
     void performCreaturesAction();
     std::vector<Food> m_food;
     std::vector<Creature> m_creatures;

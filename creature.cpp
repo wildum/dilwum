@@ -10,7 +10,20 @@ void Creature::pickRandomAction()
     m_action = static_cast<Action>(RandomGen::getRandomInt(0, action::LAST_ACTION_INDEX));
 }
 
-void Creature::performAction()
+void Creature::eat(std::vector<Food>& food)
+{
+    for (auto& foodUnit : food)
+    {
+        if (m_position.squaredDist(foodUnit.getPosition()) < (m_radius + foodUnit.getRadius()) * (m_radius + foodUnit.getRadius()))
+        {
+            foodUnit.decayValue();
+            m_health = std::min(m_health + config::CREATURE_EATING_VALUE, config::CREATURE_HEALTH);
+            break;
+        }
+    }
+}
+
+void Creature::performAction(std::vector<Food>& food)
 {
     switch (m_action)
     {
@@ -26,6 +39,8 @@ void Creature::performAction()
         m_position.x += cos(tools::degreesToRadian(m_angle)) * m_speed;
         m_position.y += sin(tools::degreesToRadian(m_angle)) * m_speed;
         break;
+    case EAT:
+        eat(food);
     default:
         break;
     }

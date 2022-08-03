@@ -29,6 +29,7 @@ std::vector<Frame> Game::run(bool recordRun)
     while (turn < config::GAME_TURN && !m_creatures.empty())
     {
         updateCreatures();
+        updateFood();
         performCreaturesAction();
         
         if (recordRun)
@@ -74,8 +75,13 @@ void Game::performCreaturesAction()
 {
     for (auto& creature : m_creatures)
     {
-        creature.performAction();
+        creature.performAction(m_food);
     }
+}
+
+void Game::updateFood()
+{
+    m_food.erase(std::remove_if(m_food.begin(), m_food.end(), [&](auto& food){return food.isDepleted();}), m_food.end());
 }
 
 void Game::updateCreatures()

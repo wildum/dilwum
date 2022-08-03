@@ -15,11 +15,12 @@ namespace config
     const int CREATURE_HEALTH = 100;
     const int CREATURE_SPEED = 6;
     const int CREATURE_ROTATION_DEGREE = 30;
+    const int CREATURE_EATING_VALUE = 10;
 
     const int FOOD_NUMBER_MIN = 20;
     const int FOOD_NUMBER_MAX = 40;
     const int FOOD_VALUE_MIN = 5;
-    const int FOOD_VALUE_MAX = 50;
+    const int FOOD_VALUE_MAX = 20;
     const int FOOD_RADIUS = 20;
 
     const float EPSILON = 0.000001;

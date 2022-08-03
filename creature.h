@@ -4,6 +4,9 @@
 #include "vec.h"
 #include "config.h"
 #include "action.h"
+#include "food.h"
+
+#include <vector>
 
 struct FrameCreature
 {
@@ -17,15 +20,17 @@ class Creature
 public:
     Creature(Vec pos, int angle, size_t id);
     void pickRandomAction();
-    void performAction();
+    void performAction(std::vector<Food>& food);
     void setAction(Action iaction){m_action = iaction;}
     void setAngle(int angle){m_angle = angle;}
     const Vec& getPosition() const {return m_position;}
-    const int getAngle() const {return m_angle;}
+    int getAngle() {return m_angle;}
+    int getHealth() {return m_health;}
     void decayHealth() {m_health--;}
     bool isAlive() {return m_health > 0;}
     FrameCreature toFrameCreature() const;
 private:
+    void eat(std::vector<Food>& food);
     Vec m_position;
     int m_angle;
     Action m_action;

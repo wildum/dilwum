@@ -10,6 +10,11 @@ bool operator!= (const Vec& c1, const Vec& c2)
     return !(operator==(c1, c2));
 }
 
+Vec operator- (const Vec& c1, const Vec& c2)
+{
+    return {c1.x - c2.x,  c1.y - c2.y};
+}
+
 std::ostream& operator<< (std::ostream& outs, const Vec& c)
 {
     return outs << "(" << c.x << "," << c.y << ")";
