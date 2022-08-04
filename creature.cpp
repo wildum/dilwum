@@ -7,7 +7,7 @@ Creature::Creature(Vec pos, int angle, size_t id) : m_position(pos), m_angle(ang
 
 void Creature::pickRandomAction()
 {
-    m_action = static_cast<Action>(RandomGen::getRandomInt(0, action::LAST_ACTION_INDEX));
+    m_action = static_cast<Output>(RandomGen::getRandomInt(0, neuron::OUTPUT_NUMBER-1));
 }
 
 void Creature::eat(std::vector<Food>& food)

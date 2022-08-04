@@ -28,6 +28,11 @@ namespace tools
     {
         return degrees * M_PI / 180;
     }
+
+    inline int map(float value, float oldMax, float newMax)
+    {
+        return std::max((int) round((value * (newMax + 1) / oldMax) - 0.500001), 0);
+    }
 }
 
 #endif

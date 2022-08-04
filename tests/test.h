@@ -8,6 +8,8 @@ namespace test
     void creatureTurnRight();
     void creatureTurnLeft();
     void creatureEat();
+    void checkCorrectGene();
+    void checkCorrectGene2();
 }
 
 #endif

@@ -7,6 +7,7 @@ void RandomGen::initialize()
 {
     gen = std::mt19937{rd()};
 }
+
 int RandomGen::getRandomInt(int a, int b)
 {
     std::uniform_int_distribution<> distr(a, b);

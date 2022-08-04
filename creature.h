@@ -3,7 +3,7 @@
 
 #include "vec.h"
 #include "config.h"
-#include "action.h"
+#include "neuron.h"
 #include "food.h"
 
 #include <vector>
@@ -22,8 +22,9 @@ public:
     Creature(Vec pos, int angle, size_t id);
     void pickRandomAction();
     void performAction(std::vector<Food>& food);
-    void setAction(Action iaction){m_action = iaction;}
+    void setAction(Output iaction){m_action = iaction;}
     void setAngle(int angle){m_angle = angle;}
+    void setSpeed(int speed){m_speed = speed;}
     const Vec& getPosition() const {return m_position;}
     int getAngle() {return m_angle;}
     int getHealth() {return m_health;}
@@ -34,7 +35,7 @@ private:
     void eat(std::vector<Food>& food);
     Vec m_position;
     int m_angle;
-    Action m_action;
+    Output m_action;
     size_t m_id;
     int m_speed = config::CREATURE_SPEED;
     int m_radius = config::CREATURE_RADIUS;
