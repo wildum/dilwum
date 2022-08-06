@@ -10,7 +10,14 @@ class Brain
 {
     public:
         Brain();
-        Brain(std::array<uint32_t, config::DNA_SIZE> dna);
+        const std::vector<uint32_t>& getGenome() const {return m_genome;}
+    private:
+        std::vector<uint32_t> m_genome;
+        int m_internalNeuronsNumber;
+        int m_connectionsNumber;
+
+        void generateGENOME();
+        void buildBrain();
 };
 
 #endif

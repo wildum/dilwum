@@ -33,6 +33,11 @@ namespace tools
     {
         return std::max((int) round((value * (newMax + 1) / oldMax) - 0.500001), 0);
     }
+
+    inline float squaredDist(int x1, int y1, int x2, int y2)
+    {
+        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+    }
 }
 
 #endif

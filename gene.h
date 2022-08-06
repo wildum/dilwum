@@ -7,14 +7,14 @@ namespace gene
 {
     enum SenderType
     {
-        SENDER_NEUTRAL, SENDER_INPUT
+        SENDER_INTERNAL, SENDER_INPUT
     };
     enum ReceiverType
     {
-        RECEIVER_NEUTRAL, RECEIVER_OUTPUT
+        RECEIVER_INTERNAL, RECEIVER_OUTPUT
     };
-    uint32_t generateRadomGene(int inputNumber, int neutralNumber, int outputNumber);
-    uint32_t correctGene(uint32_t gene, int inputNumber, int neutralNumber, int outputNumber);
+    uint32_t generateRadomGene(int inputNumber, int internalNumber, int outputNumber);
+    uint32_t correctGene(uint32_t gene, int inputNumber, int internalNumber, int outputNumber);
 }
 
 #endif

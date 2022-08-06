@@ -7,7 +7,8 @@ namespace config
 {
     const float TURN_TIME_SECOND = 0.5;
 
-    const int DNA_SIZE = 32;
+    const int GENOME_SIZE_MAX = 50; // max 8 bits
+    const int INTERNAL_NEURON_NUMBER_MAX = 15; // max 8 bits
 
     const int MAP_WIDTH = 2500;
     const int MAP_HEIGHT = 1000;
