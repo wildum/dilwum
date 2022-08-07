@@ -40,6 +40,9 @@ class BrainDrawer
             sf::CircleShape selfConnection;
         };
 
+        const int NODE_RADIUS = 20;
+        const int ARROW_RADIUS = 10;
+
         int m_internalNodeCounter = 0;
         std::vector<Node> m_nodes;
         std::vector<Connection> m_connections;

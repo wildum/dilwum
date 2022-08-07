@@ -29,6 +29,11 @@ namespace tools
         return degrees * M_PI / 180;
     }
 
+    inline float radianToDegrees(float radians)
+    {
+        return radians * 180 / M_PI;
+    }
+
     inline int map(float value, float oldMax, float newMax)
     {
         return std::max((int) round((value * (newMax + 1) / oldMax) - 0.500001), 0);
@@ -37,6 +42,11 @@ namespace tools
     inline float squaredDist(int x1, int y1, int x2, int y2)
     {
         return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+    }
+
+    inline float dist(int x1, int y1, int x2, int y2)
+    {
+        return sqrt(squaredDist(x1, y1, x2, y2));
     }
 }
 

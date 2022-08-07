@@ -38,6 +38,12 @@ public:
         }
     }
 
+    inline void scale(float s)
+    {
+        x *= s;
+        y *= s;
+    }
+
     inline float dist(const Vec& v)
     {
         return sqrt(squaredDist(v));

@@ -71,7 +71,7 @@ void BrainDrawer::onPressingMouseButton(int x, int y)
         auto pos = node.shape.getPosition();
         if (tools::squaredDist(x, y, pos.x, pos.y) < node.shape.getRadius()*node.shape.getRadius())
         {
-            node.text.setPosition(x, y);
+            node.text.setPosition(x - NODE_RADIUS / 2.0f, y - NODE_RADIUS / 2.0f);
             node.shape.setPosition(x, y);
             break;
         }
@@ -151,9 +151,8 @@ void BrainDrawer::buildNode(int type, int id, ConnectionSide connectionSide)
             node.type = type == 0 ? NeuronType::INTERNAL : NeuronType::INPUT;
         }
 
-        const int nodeRadius = 20;
-        node.shape.setRadius(nodeRadius);
-        node.shape.setOrigin(nodeRadius/2, nodeRadius/2);
+        node.shape.setRadius(NODE_RADIUS);
+        node.shape.setOrigin(NODE_RADIUS, NODE_RADIUS);
 
         switch (node.type)
         {
@@ -172,7 +171,7 @@ void BrainDrawer::buildNode(int type, int id, ConnectionSide connectionSide)
         node.text.setFont(m_font);
         node.text.setCharacterSize(20);
         node.text.setFillColor(sf::Color::Black);
-        node.text.setPosition(node.shape.getPosition());
+        node.text.setPosition(node.shape.getPosition().x - NODE_RADIUS / 2.0f, node.shape.getPosition().y - NODE_RADIUS / 2.0f);
         switch (node.type)
         {
             case NeuronType::INPUT:
@@ -218,10 +217,20 @@ void BrainDrawer::drawConnections(sf::RenderWindow& window)
         else
         {
             sf::Vector2f senderPosition = m_nodes[connection.senderIndex].shape.getPosition();
-            sf::Vector2f receiverPositionPosition = m_nodes[connection.receiverIndex].shape.getPosition();
+            sf::Vector2f receiverPosition = m_nodes[connection.receiverIndex].shape.getPosition();
             connection.line[0].position = senderPosition;
-            connection.line[1].position = receiverPositionPosition;
+            connection.line[1].position = receiverPosition;
             window.draw(connection.line, 2, sf::Lines);
+            Vec v{receiverPosition.x - senderPosition.x, receiverPosition.y - senderPosition.y};
+            v.normalize();
+            v.scale(tools::dist(senderPosition.x, senderPosition.y, receiverPosition.x, receiverPosition.y) - NODE_RADIUS - ARROW_RADIUS);
+            sf::CircleShape arrow(80, 3);
+            arrow.setRadius(ARROW_RADIUS);
+            arrow.setFillColor(sf::Color::Black);
+            arrow.setOrigin(ARROW_RADIUS, ARROW_RADIUS);
+            arrow.setPosition(senderPosition.x + v.x, senderPosition.y + v.y);
+            arrow.setRotation(tools::radianToDegrees(atan2(receiverPosition.x - senderPosition.x, senderPosition.y - receiverPosition.y)));
+            window.draw(arrow);
         }
     }
 }
