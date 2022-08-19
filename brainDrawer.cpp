@@ -120,6 +120,11 @@ void BrainDrawer::buildConnections(const std::vector<uint32_t>& genome)
             std::cout << senderType << " " << receiverType << " " << senderId << " " << receiverId << " " << connection.senderIndex << " " << connection.receiverIndex << std::endl;
             continue;
         }
+
+        connection.text.setFont(m_font);
+        connection.text.setCharacterSize(20);
+        connection.text.setFillColor(sf::Color::Black);
+        connection.text.setString(std::to_string(i));
         m_connections.push_back(connection);
     }
 }
@@ -213,6 +218,8 @@ void BrainDrawer::drawConnections(sf::RenderWindow& window)
             connection.selfConnection.setPosition(position);
             connection.selfConnection.setFillColor(sf::Color::Transparent);
             window.draw(connection.selfConnection);
+            connection.text.setPosition(position.x + 2, position.y + 2);
+            window.draw(connection.text);
         }
         else
         {
@@ -231,6 +238,8 @@ void BrainDrawer::drawConnections(sf::RenderWindow& window)
             arrow.setPosition(senderPosition.x + v.x, senderPosition.y + v.y);
             arrow.setRotation(tools::radianToDegrees(atan2(receiverPosition.x - senderPosition.x, senderPosition.y - receiverPosition.y)));
             window.draw(arrow);
+            connection.text.setPosition((senderPosition.x + receiverPosition.x) / 2.0f, (senderPosition.y + receiverPosition.y) / 2.0f);
+            window.draw(connection.text);
         }
     }
 }

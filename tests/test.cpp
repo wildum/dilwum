@@ -2,6 +2,8 @@
 #include "../food.h"
 #include "../tools.h"
 #include "../gene.h"
+#include "../brain.h"
+#include "../brainDrawer.h"
 #include "test.h"
 #include <cassert>
 #include <vector>
@@ -16,7 +18,8 @@ namespace test
         creatureEat();
         checkCorrectGene();
         checkCorrectGene2();
-        tools::log("All tests ran fine");
+        checkBrainConnectionsOrdering();
+        tools::log("All tests passed");
     }
 
     void creatureMoveFoward()
@@ -104,5 +107,17 @@ namespace test
         assert(receiverType == 1);
         assert(receiverId == 2);
         assert(weight == 60330);
+    }
+
+    void checkBrainConnectionsOrdering()
+    {
+        Brain brain;
+        BrainDrawer brainDrawer;
+        tools::log(brain.getConnection().size());
+        for (const auto& connection : brain.getConnection())
+        {
+            std::cout << "Connection: " << connection.id << std::endl;
+        }
+        brainDrawer.drawBrain(brain);
     }
 }

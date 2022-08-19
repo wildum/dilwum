@@ -38,6 +38,7 @@ class BrainDrawer
             int receiverIndex = -1;
             sf::Vertex line[2] = {sf::Vertex(sf::Vector2f(0, 0), sf::Color::Black), sf::Vertex(sf::Vector2f(0, 0), sf::Color::Black)};
             sf::CircleShape selfConnection;
+            sf::Text text;
         };
 
         const int NODE_RADIUS = 20;
