@@ -4,8 +4,19 @@
 namespace neuron
 {
     const int OUTPUT_NUMBER = 5;
-    const int INPUT_NUMBER = 2;
+    const int INPUT_NUMBER = 4;
 }
+
+enum Taste
+{
+    TASTE_NOTHING, TASTE_FOOD
+};
+
+const int ANTENNATOUCH_MAX_VALUE = 3;
+enum AntennaTouch
+{
+    TOUCH_NOTHING, TOUCH_FOOD, TOUCH_CREATURE, TOUCH_WALL  
+};
 
 enum ConnectionSide
 {
@@ -24,7 +35,7 @@ enum Output
 
 enum Input
 {
-    HEALTH, EYE
+    HEALTH, TASTE, LEFT_ANTENNA_TOUCH, RIGHT_ANTENNA_TOUCH
 };
 
 #endif

@@ -49,7 +49,7 @@ public:
         return sqrt(squaredDist(v));
     }
 
-    inline float squaredDist(const Vec& v)
+    inline float squaredDist(const Vec& v) const
     {
         return (v.x - x) * (v.x - x) + (v.y - y) * (v.y - y);
     }
@@ -59,16 +59,21 @@ public:
         return {v0.x + t * (v1.x - v0.x), v0.y + t * (v1.y - v0.y)};
     }
 
-    void clip()
+    void clip(uint16_t radius)
     {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x > config::MAP_WIDTH)
-            x = config::MAP_WIDTH;
-        if (y > config::MAP_HEIGHT)
-            y = config::MAP_HEIGHT;
+        if (x < radius)
+            x = radius;
+        if (y < radius)
+            y = radius;
+        if (x > config::MAP_WIDTH-radius)
+            x = config::MAP_WIDTH-radius;
+        if (y > config::MAP_HEIGHT-radius)
+            y = config::MAP_HEIGHT-radius;
+    }
+
+    const bool isOut() const
+    {
+        return x <= 0 || x >= config::MAP_WIDTH || y <= 0 || y > config::MAP_HEIGHT;
     }
 };
 

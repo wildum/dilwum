@@ -11,6 +11,12 @@ Brain::Brain()
     buildBrain();
 }
 
+Brain::Brain(const std::vector<uint32_t>& genome)
+{
+    m_genome = genome;
+    buildBrain();
+}
+
 void Brain::generateGENOME()
 {
     // first gene codes for the number of internal neurons and for the number of connections - total used : 16 bits
@@ -43,6 +49,47 @@ void Brain::buildNodes()
         int receiverId = (gene >> 16) & 127;
         buildNode(senderType, senderId, ConnectionSide::SENDER);
         buildNode(receiverType, receiverId, ConnectionSide::RECEIVER);
+    }
+}
+
+void Brain::setHealth(int health)
+{
+    m_inputValues[Input::HEALTH] = (float) health / config::CREATURE_HEALTH;
+}
+
+void Brain::setTaste(Taste taste)
+{
+    m_inputValues[Input::TASTE] = taste == TASTE_FOOD ? 1.0 : 0.0;
+}
+
+void Brain::setLeftAntennaTouch(AntennaTouch leftTouch)
+{
+    m_inputValues[Input::LEFT_ANTENNA_TOUCH] = (float) leftTouch / ANTENNATOUCH_MAX_VALUE;
+}
+
+void Brain::setRightAntennaTouch(AntennaTouch rightTouch)
+{
+    m_inputValues[Input::RIGHT_ANTENNA_TOUCH] = (float) rightTouch / ANTENNATOUCH_MAX_VALUE;
+}
+
+void Brain::process()
+{
+    for (const auto& connection : m_connections)
+    {
+        if (m_nodes[connection.senderIndex].type == NeuronType::INPUT)
+        {
+            m_nodes[connection.senderIndex].inputs.push_back(m_inputValues[(Input) m_nodes[connection.senderIndex].id]);
+        }
+
+        // dont forget to clear the receiver node after its trigger
+    }
+}
+
+void Brain::setInputNode(Node& node)
+{
+    switch (node.id)
+    {
+
     }
 }
 

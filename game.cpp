@@ -91,6 +91,7 @@ void Game::updateCreatures()
         creature.decayHealth();
         if (creature.isAlive())
         {
+            creature.processInputs(m_food, m_creatures);
             creature.pickRandomAction();
         }
     }

@@ -21,6 +21,9 @@ namespace config
     const int CREATURE_SPEED = 6;
     const int CREATURE_ROTATION_DEGREE = 30;
     const int CREATURE_EATING_VALUE = 10;
+    const int CREATURE_ECHOLOCATION_DISTANCE = 50;
+    const int CREATURE_ANTENNA_Y_OFFSET = 3;
+    const int CREATURE_ANTENNA_X_OFFSET = 4;
 
     const int FOOD_NUMBER_MIN = 40;
     const int FOOD_NUMBER_MAX = 60;
