@@ -2,6 +2,7 @@
 #include "gene.h"
 #include "randomGen.h"
 #include "tools.h"
+#include <limits>
 
 #include <unordered_set>
 
@@ -76,21 +77,52 @@ void Brain::process()
 {
     for (const auto& connection : m_connections)
     {
+        float outputValue = 0;
         if (m_nodes[connection.senderIndex].type == NeuronType::INPUT)
         {
-            m_nodes[connection.senderIndex].inputs.push_back(m_inputValues[(Input) m_nodes[connection.senderIndex].id]);
+            outputValue = m_inputValues[(Input) m_nodes[connection.senderIndex].id];
+        }
+        else
+        {
+            for (float values : m_nodes[connection.senderIndex].inputs)
+                outputValue += values;
+            outputValue = tanh(outputValue);
         }
 
-        // dont forget to clear the receiver node after its trigger
+        // if the nodes was triggered, it should clear its state before receiving new data
+        if (m_nodes[connection.receiverIndex].triggered)
+        {
+            m_nodes[connection.receiverIndex].triggered = false;
+            m_nodes[connection.receiverIndex].inputs.clear();
+        }
+
+        m_nodes[connection.receiverIndex].inputs.push_back(outputValue * connection.weight);
     }
 }
 
-void Brain::setInputNode(Node& node)
+Output Brain::pickAction()
 {
-    switch (node.id)
-    {
+    Output action;
+    float bestScore = std::numeric_limits<float>::min();
 
+    for (const auto& node : m_nodes)
+    {
+        if (node.type == NeuronType::OUTPUT)
+        {
+            float score = 0;
+            for (float values : node.inputs)
+                score += values;
+            score = tanh(score);
+            std::cout << score << std::endl;
+            if (score > bestScore)
+            {
+                bestScore = score;
+                action = static_cast<Output>(node.id);
+            }
+        }
     }
+
+    return action;
 }
 
 void Brain::buildConnections()

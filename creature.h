@@ -23,6 +23,7 @@ public:
     Creature(Vec pos, int angle, size_t id);
     Creature(Vec pos, int angle, size_t id, const std::vector<uint32_t>& genome);
     void pickRandomAction();
+    void pickAction();
     void performAction(std::vector<Food>& food);
     void setAction(Output iaction){m_action = iaction;}
     void setAngle(int angle){m_angle = angle;}
@@ -39,7 +40,7 @@ public:
     void processInputs(std::vector<Food>& food, std::vector<Creature>& creatures);
     FrameCreature toFrameCreature() const;
 private:
-    AntennaTouch Creature::antennaTouchFeedback(const Vec& antennaPosition, std::vector<Food>& food, std::vector<Creature>& creatures);
+    AntennaTouch antennaTouchFeedback(const Vec& antennaPosition, std::vector<Food>& food, std::vector<Creature>& creatures);
     Taste taste(std::vector<Food>& food);
     void eat(std::vector<Food>& food);
     Brain m_brain;

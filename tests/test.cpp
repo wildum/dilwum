@@ -18,7 +18,8 @@ namespace test
         creatureEat();
         checkCorrectGene();
         checkCorrectGene2();
-        checkBrainConnectionsOrdering();
+        //checkBrainConnectionsOrdering();
+        checkBrainProcess();
         tools::log("All tests passed");
     }
 
@@ -119,5 +120,36 @@ namespace test
             std::cout << "Connection: " << connection.id << std::endl;
         }
         brainDrawer.drawBrain(brain);
+    }
+
+    void checkBrainProcess()
+    {
+        std::vector<uint32_t> genome;
+        BrainDrawer brainDrawer;
+        genome.push_back(0);
+        genome.push_back(gene::generateSpecificConnectionGene(1, 0, 0, 0, 2));
+        genome.push_back(gene::generateSpecificConnectionGene(1, 0, 0, 1, -2));
+        genome.push_back(gene::generateSpecificConnectionGene(1, 1, 0, 1, 3));
+        genome.push_back(gene::generateSpecificConnectionGene(0, 0, 1, 0, 1));
+        genome.push_back(gene::generateSpecificConnectionGene(0, 1, 0, 0, 1));
+        genome.push_back(gene::generateSpecificConnectionGene(0, 1, 1, 0, -3));
+        genome.push_back(gene::generateSpecificConnectionGene(0, 1, 1, 1, 2));
+        Brain brain(genome);
+        brain.setHealth(50); // 0.5
+        brain.setTaste(Taste::TASTE_FOOD); // 1.0
+        // -1 D
+        // 1 C
+        // 3 D
+        // D value = 0.9640
+        // 0.9640 C
+        // 1.928 E
+        // -2.892 F
+        // C value = 0.9610
+        // 0.9610 F
+        // E output = 0.95
+        // F output = -0.95
+        brain.process();
+        Output action = brain.pickAction();
+        assert(action == ROTATE_RIGHT);
     }
 }

@@ -10,7 +10,7 @@ struct Node
 {
     NeuronType type;
     int id;
-    bool visitedOnce = false;
+    bool triggered = false;
     std::vector<float> inputs; // empty the vector when sending values out
 };
 
@@ -34,6 +34,9 @@ class Brain
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
         void setRightAntennaTouch(AntennaTouch rightTouch);
+        void process();
+        Output pickAction();
+
     private:
         std::vector<uint32_t> m_genome;
         std::vector<Node> m_nodes;
@@ -41,14 +44,12 @@ class Brain
         int m_internalNeuronsNumber;
         int m_connectionsNumber;
 
-        void setInputNode(Node& node);
         void generateGENOME();
         void buildBrain();
         void buildNode(int type, int id, ConnectionSide connectionSide);
         void buildConnections();
         void buildNodes();
         void sortConnections();
-        void process();
         float getWeightFromGene(uint32_t gene);
 
         std::map<Input, float> m_inputValues;

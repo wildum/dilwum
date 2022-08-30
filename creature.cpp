@@ -116,6 +116,12 @@ void Creature::processInputs(std::vector<Food>& food, std::vector<Creature>& cre
     m_brain.setRightAntennaTouch(antennaTouchFeedback(getRightAntennaPosition(), food, creatures));
 }
 
+void Creature::pickAction()
+{
+    m_brain.process();
+    m_action = m_brain.pickAction();
+}
+
 FrameCreature Creature::toFrameCreature() const
 {
     FrameCreature frameCreature;

@@ -30,4 +30,12 @@ namespace gene
 
         return (senderType << 31) | (senderId << 24) | (receiverType << 23) | (receiverId << 16) | (gene & 65535);
     }
+
+    uint32_t generateSpecificConnectionGene(int senderType, int senderId, int receiverType, int receiverId, float weight)
+    {
+        uint32_t gene = 0;
+        int encodedWeight = weight * 8192 + 32767.5;
+        gene += encodedWeight;
+        return (senderType << 31) | (senderId << 24) | (receiverType << 23) | (receiverId << 16) | (gene & 65535);
+    }
 }

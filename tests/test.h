@@ -10,6 +10,7 @@ namespace test
     void creatureEat();
     void checkCorrectGene();
     void checkCorrectGene2();
+    void checkBrainProcess();
     void checkBrainConnectionsOrdering();
 }
 

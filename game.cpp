@@ -92,7 +92,7 @@ void Game::updateCreatures()
         if (creature.isAlive())
         {
             creature.processInputs(m_food, m_creatures);
-            creature.pickRandomAction();
+            creature.pickAction();
         }
     }
     m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [&](auto& creature){return !creature.isAlive();}), m_creatures.end());
