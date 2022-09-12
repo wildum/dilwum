@@ -28,12 +28,16 @@ public:
     void setAction(Output iaction){m_action = iaction;}
     void setAngle(int angle){m_angle = angle;}
     void setSpeed(int speed){m_speed = speed;}
+    void setScore(float score){m_score = score;}
     const Vec& getPosition() const {return m_position;}
     int getAngle() {return m_angle;}
-    int getHealth() {return m_health;}
+    const int getHealth() const {return m_health;}
     const int getRadius() const {return m_radius;}
-    void decayHealth() {m_health--;}
-    bool isAlive() {return m_health > 0;}
+    const int getDeadAt() const {return m_deadAt;}
+    const float getScore() const {return m_score;}
+    Brain& getBrain() {return m_brain;}
+    void decayHealth(int turn);
+    const bool isAlive() const {return m_isAlive;}
     Vec getMouthPosition();
     Vec getLeftAntennaPosition();
     Vec getRightAntennaPosition();
@@ -51,6 +55,9 @@ private:
     int m_speed = config::CREATURE_SPEED;
     int m_radius = config::CREATURE_RADIUS;
     int m_health = config::CREATURE_HEALTH;
+    bool m_isAlive = true;
+    int m_deadAt = -1;
+    float m_score;
 };
 
 #endif

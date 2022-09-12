@@ -28,6 +28,16 @@ void Creature::eat(std::vector<Food>& food)
     }
 }
 
+void Creature::decayHealth(int turn)
+{
+    m_health = std::max(m_health-1, 0);
+    if (m_health <= 0)
+    {
+        m_deadAt = turn;
+        m_isAlive = false;
+    }
+}
+
 void Creature::performAction(std::vector<Food>& food)
 {
     switch (m_action)

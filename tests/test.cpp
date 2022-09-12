@@ -57,8 +57,8 @@ namespace test
     {
         // eating dist is 29
         Creature creature{Vec{100, 50}, 30, 0};
-        creature.decayHealth();
-        creature.decayHealth();
+        creature.decayHealth(0);
+        creature.decayHealth(0);
         creature.setAction(Output::EAT);
         std::vector<Food> food;
         Food f1{{130, 60}, 10, 0};
@@ -126,7 +126,6 @@ namespace test
     {
         std::vector<uint32_t> genome;
         BrainDrawer brainDrawer;
-        genome.push_back(0);
         genome.push_back(gene::generateSpecificConnectionGene(1, 0, 0, 0, 2));
         genome.push_back(gene::generateSpecificConnectionGene(1, 0, 0, 1, -2));
         genome.push_back(gene::generateSpecificConnectionGene(1, 1, 0, 1, 3));

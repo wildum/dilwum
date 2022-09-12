@@ -8,7 +8,8 @@ class Factory
 {
 public:
     static Food createRandomFood();
-    static Creature createRandomCreatures();
+    static Creature createRandomCreature();
+    static Creature createCreature(std::vector<uint32_t>& dna);
 private:
     static size_t idCounter;
 };

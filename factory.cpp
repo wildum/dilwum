@@ -13,10 +13,18 @@ Food Factory::createRandomFood()
     return {{x, y}, value, idCounter++};
 }
 
-Creature Factory::createRandomCreatures()
+Creature Factory::createRandomCreature()
 {
     int x = RandomGen::getRandomInt(0, config::MAP_WIDTH);
     int y = RandomGen::getRandomInt(0, config::MAP_HEIGHT);
     int angle = RandomGen::getRandomInt(0, 360);
     return {{x, y}, angle, idCounter++};
+}
+
+Creature Factory::createCreature(std::vector<uint32_t>& dna)
+{
+    int x = RandomGen::getRandomInt(0, config::MAP_WIDTH);
+    int y = RandomGen::getRandomInt(0, config::MAP_HEIGHT);
+    int angle = RandomGen::getRandomInt(0, 360);
+    return {{x, y}, angle, idCounter++, dna};
 }

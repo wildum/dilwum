@@ -80,7 +80,7 @@ void BrainDrawer::onPressingMouseButton(int x, int y)
 
 void BrainDrawer::buildNodes(const std::vector<uint32_t>& genome)
 {
-    for (int i = 1; i < genome.size(); i++)
+    for (int i = 0; i < genome.size(); i++)
     {
         uint32_t gene = genome[i];
         int senderType = gene >> 31;
@@ -94,7 +94,7 @@ void BrainDrawer::buildNodes(const std::vector<uint32_t>& genome)
 
 void BrainDrawer::buildConnections(const std::vector<uint32_t>& genome)
 {
-    for (int i = 1; i < genome.size(); i++) 
+    for (int i = 0; i < genome.size(); i++) 
     {
         uint32_t gene = genome[i];
         int senderType = gene >> 31;

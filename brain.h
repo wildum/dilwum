@@ -28,13 +28,15 @@ class Brain
     public:
         Brain();
         Brain(const std::vector<uint32_t>& genome);
-        const std::vector<uint32_t>& getGenome() const {return m_genome;}
-        const std::vector<Connection>& getConnection() const{return m_connections;}
+        std::vector<uint32_t>& getGenome() {return m_genome;}
+        const std::vector<Connection>& getConnection() const {return m_connections;}
+        const int getInternalNeuronsNumber() const {return m_internalNeuronsNumber;}
         void setHealth(int health);
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
         void setRightAntennaTouch(AntennaTouch rightTouch);
         void process();
+        void setInternalNeuronNumber(int internalNeuronNumber) {m_internalNeuronsNumber = internalNeuronNumber;}
         Output pickAction();
 
     private:
@@ -42,7 +44,6 @@ class Brain
         std::vector<Node> m_nodes;
         std::vector<Connection> m_connections;
         int m_internalNeuronsNumber;
-        int m_connectionsNumber;
 
         void generateGENOME();
         void buildBrain();

@@ -25,12 +25,11 @@ void Environment::run()
 
     Game game;
 
-    bool recordRun = true;
-    std::vector<Frame> frames = game.run(recordRun);
+    std::vector<Frame> frames = game.run();
 
     int turnCount = 1;
 
-    if (recordRun && !frames.empty())
+    if (!frames.empty())
     {
         sf::RenderWindow window(sf::VideoMode(2000, 1000), "Dilwum");
 

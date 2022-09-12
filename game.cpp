@@ -8,37 +8,46 @@
 void Game::initialize()
 {
     tools::log("start game initialization");
-    initFood();
     initCreatures();
     tools::log("game initialization done");
 }
 
-std::vector<Frame> Game::run(bool recordRun)
+std::vector<Frame> Game::run()
 {
     std::vector<Frame> frames;
 
     initialize();
 
-    if (recordRun)
-    {
-        addFrame(frames);
-    }
+    int currentGeneration = 0;
 
-    int turn = 0;
-    tools::log("game started");
-    while (turn < config::GAME_TURN && !m_creatures.empty())
+    while (currentGeneration < config::GENERATIONS)
     {
-        updateCreatures();
-        updateFood();
-        performCreaturesAction();
-        
-        if (recordRun)
+        bool lastRun = currentGeneration == config::GENERATIONS - 1;
+        if (lastRun)
         {
             addFrame(frames);
         }
-        turn++;
+
+        int turn = 0;
+        bool alive = true;
+        initFood();
+        tools::log("generation: " + std::to_string(turn));
+        while (turn < config::GAME_TURN && alive)
+        {
+            alive = updateCreatures(turn);
+            updateFood();
+            performCreaturesAction();
+            
+            if (lastRun)
+            {
+                addFrame(frames);
+            }
+            turn++;
+        }
+        // changes are applied directly on the pop
+        ga.computeNextGen(m_creatures, turn);
     }
-    tools::log("game ended");
+
     return frames;
 }
 
@@ -46,7 +55,10 @@ void Game::addFrame(std::vector<Frame>& frames)
 {
     Frame frame;
     for (const auto& creature : m_creatures)
-        frame.creatures.push_back(creature.toFrameCreature());
+    {
+        if (creature.isAlive())
+            frame.creatures.push_back(creature.toFrameCreature());
+    }
     for (const auto& food : m_food)
         frame.food.push_back(food.toFrameFood());
     frames.push_back(frame);
@@ -67,7 +79,7 @@ void Game::initCreatures()
     m_creatures.clear();
     for (int i = 0; i < config::CREATURE_POP_NUMBER; i++)
     {
-        m_creatures.emplace_back(Factory::createRandomCreatures());
+        m_creatures.emplace_back(Factory::createRandomCreature());
     }
 }
 
@@ -75,7 +87,8 @@ void Game::performCreaturesAction()
 {
     for (auto& creature : m_creatures)
     {
-        creature.performAction(m_food);
+        if (creature.isAlive())
+            creature.performAction(m_food);
     }
 }
 
@@ -84,16 +97,18 @@ void Game::updateFood()
     m_food.erase(std::remove_if(m_food.begin(), m_food.end(), [&](auto& food){return food.isDepleted();}), m_food.end());
 }
 
-void Game::updateCreatures()
+bool Game::updateCreatures(int turn)
 {
+    bool alive = false;
     for (auto& creature : m_creatures)
     {
-        creature.decayHealth();
+        creature.decayHealth(turn);
         if (creature.isAlive())
         {
+            alive = true;
             creature.processInputs(m_food, m_creatures);
             creature.pickAction();
         }
     }
-    m_creatures.erase(std::remove_if(m_creatures.begin(), m_creatures.end(), [&](auto& creature){return !creature.isAlive();}), m_creatures.end());
+    return alive;
 }
