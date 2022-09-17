@@ -21,7 +21,7 @@ Creature Factory::createRandomCreature()
     return {{x, y}, angle, idCounter++};
 }
 
-Creature Factory::createCreature(std::vector<uint32_t>& dna)
+Creature Factory::createCreature(const std::vector<uint32_t>& dna)
 {
     int x = RandomGen::getRandomInt(0, config::MAP_WIDTH);
     int y = RandomGen::getRandomInt(0, config::MAP_HEIGHT);

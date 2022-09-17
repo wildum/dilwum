@@ -1,7 +1,7 @@
 #include "creature.h"
 #include "randomGen.h"
 
-Creature::Creature(Vec pos, int angle, size_t id) : m_position(pos), m_angle(angle), m_id(id)
+Creature::Creature(Vec pos, int angle, size_t id) : m_position(pos), m_angle(angle), m_id(id), m_brain()
 {
 }
 

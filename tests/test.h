@@ -12,6 +12,8 @@ namespace test
     void checkCorrectGene2();
     void checkBrainProcess();
     void checkBrainConnectionsOrdering();
+    void checkGASelection();
+    void checkGA();
 }
 
 #endif

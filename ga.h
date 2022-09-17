@@ -7,7 +7,6 @@ class Ga
 {
 public:
     void computeNextGen(std::vector<Creature>& creatures, int turn);
-private:
     void selection(std::vector<Creature>& creatures);
     void crossover(std::vector<Creature>& creatures);
     void mutation(std::vector<Creature>& creatures, int turn);

@@ -12,7 +12,6 @@ public:
   static float getRandomFloat();
   static bool flipCoin();
 private:
-  static std::random_device rd;
   static std::mt19937 gen;
 };
 

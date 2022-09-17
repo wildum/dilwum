@@ -29,6 +29,7 @@ public:
     void setAngle(int angle){m_angle = angle;}
     void setSpeed(int speed){m_speed = speed;}
     void setScore(float score){m_score = score;}
+    void setHealth(int value){m_health = value;}
     const Vec& getPosition() const {return m_position;}
     int getAngle() {return m_angle;}
     const int getHealth() const {return m_health;}

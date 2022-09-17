@@ -19,9 +19,9 @@ void BrainDrawer::drawRandomBrain()
     drawBrain(brain);
 }
 
-void BrainDrawer::drawBrain(const Brain& brain)
+void BrainDrawer::drawBrain(Brain& brain)
 {
-    std::vector<uint32_t> genome = brain.getGenome();
+    auto genome = brain.getGenome();
 
     if (genome.size() < 2)
     {

@@ -8,6 +8,7 @@
 
 Brain::Brain()
 {
+    m_genome.clear();
     generateGENOME();
     buildBrain();
 }

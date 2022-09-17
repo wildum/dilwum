@@ -12,7 +12,7 @@ class BrainDrawer
     public:
         BrainDrawer();
         void drawRandomBrain();
-        void drawBrain(const Brain& brain);
+        void drawBrain(Brain& brain);
 
     private:
 
