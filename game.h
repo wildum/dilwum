@@ -7,10 +7,16 @@
 #include "frame.h"
 #include "ga.h"
 
+struct GameFeedback
+{
+    std::vector<Frame> frames;
+    std::vector<Creature> creatures;
+};
+
 class Game
 {
 public:
-    std::vector<Frame> run();
+    GameFeedback run();
 private:
     void addFrame(std::vector<Frame>& frames);
     void initialize();

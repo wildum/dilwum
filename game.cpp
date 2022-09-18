@@ -12,9 +12,9 @@ void Game::initialize()
     tools::log("game initialization done");
 }
 
-std::vector<Frame> Game::run()
+GameFeedback Game::run()
 {
-    std::vector<Frame> frames;
+    GameFeedback gameFeedback;
 
     initialize();
 
@@ -25,7 +25,7 @@ std::vector<Frame> Game::run()
         bool lastRun = currentGeneration == config::GENERATIONS - 1;
         if (lastRun)
         {
-            addFrame(frames);
+            addFrame(gameFeedback.frames);
         }
 
         int turn = 0;
@@ -39,17 +39,22 @@ std::vector<Frame> Game::run()
             
             if (lastRun)
             {
-                addFrame(frames);
+                addFrame(gameFeedback.frames);
             }
             turn++;
         }
         logGameInfo(currentGeneration);
-        // changes are applied directly on the pop
-        ga.computeNextGen(m_creatures, turn);
+        if (!lastRun)
+        {
+            // changes are applied directly on the pop
+            ga.computeNextGen(m_creatures, turn);
+        }
         currentGeneration++;
     }
 
-    return frames;
+    gameFeedback.creatures = m_creatures;
+
+    return gameFeedback;
 }
 
 void Game::logGameInfo(int currentGeneration)

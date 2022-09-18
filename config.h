@@ -10,7 +10,7 @@ namespace config
     const int GENOME_SIZE_MAX = 50; // max 8 bits
     const int INTERNAL_NEURON_NUMBER_MAX = 15; // max 8 bits
 
-    const int GENERATIONS = 1000;
+    const int GENERATIONS = 30;
     const float GA_POP_RETAINED_RATIO = 0.5;
     const float GA_MUTATION_RATE_MIN = 0.01;
     const float GA_MUTATION_RATE_MAX = 0.2;
@@ -18,7 +18,7 @@ namespace config
     const int MAP_WIDTH = 2500;
     const int MAP_HEIGHT = 1000;
 
-    const int GAME_TURN = 1000;
+    const int GAME_TURN = 200;
 
     const int CREATURE_RADIUS = 9;
     const int CREATURE_POP_NUMBER = 100;

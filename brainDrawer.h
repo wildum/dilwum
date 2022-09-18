@@ -18,8 +18,8 @@ class BrainDrawer
 
         sf::Font m_font;
 
-        const int WINDOWX = 2000;
-        const int WINDOWY = 1000;
+        const int WINDOWX = 1800;
+        const int WINDOWY = 800;
 
         const std::array<std::string, 4> INPUT_NAMES {{"H", "T", "LA", "RA"}};
         const std::array<std::string, 5> OUTPUT_NAMES {{"RL", "RR", "MF", "W", "E"}};

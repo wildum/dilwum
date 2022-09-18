@@ -7,6 +7,8 @@
 #include "creatureEntity.h"
 #include "foodEntity.h"
 #include "frame.h"
+#include "brainDrawer.h"
+#include "game.h"
 
 class Environment
 {
@@ -27,6 +29,7 @@ private:
         float time);
     static std::unordered_map<size_t, CreatureEntity> initCreaturesEntities(sf::RenderWindow& window, Frame& firstFrame);
     static std::unordered_map<size_t, FoodEntity> initFoodEntities(sf::RenderWindow& window, Frame& firstFrame);
+    static void onPressingMouseButton(BrainDrawer& brainDrawer, GameFeedback& gameFeedback, std::vector<Frame>::iterator& frameIterator, int x, int y);
 };
 
 #endif

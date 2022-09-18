@@ -4,6 +4,7 @@
 #include "randomGen.h"
 #include "creatureEntity.h"
 #include "foodEntity.h"
+#include "brainDrawer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,37 +26,43 @@ void Environment::run()
 
     Game game;
 
-    std::vector<Frame> frames = game.run();
+    GameFeedback gamefeedback = game.run();
 
     int turnCount = 1;
 
-    if (!frames.empty())
+    BrainDrawer brainDrawer;
+
+    if (!gamefeedback.frames.empty())
     {
         sf::RenderWindow window(sf::VideoMode(2000, 1000), "Dilwum");
 
-        auto creatureMap = initCreaturesEntities(window, frames[0]);
-        auto foodMap = initFoodEntities(window, frames[0]);
+        auto creatureMap = initCreaturesEntities(window, gamefeedback.frames[0]);
+        auto foodMap = initFoodEntities(window, gamefeedback.frames[0]);
 
         sf::Clock deltaClock;
 
-        auto currentFrameIterator = frames.begin();
+        auto currentFrameIterator = gamefeedback.frames.begin();
         auto nextFrameIterator = currentFrameIterator + 1;
         float turnTime = 0;
+        bool paused = false;
         tools::log("start displaying");
-        while (window.isOpen() && nextFrameIterator != frames.end())
+        while (window.isOpen() && nextFrameIterator != gamefeedback.frames.end())
         {
-            float dt = deltaClock.restart().asSeconds();
-            turnTime += dt;
-            if (turnTime > config::TURN_TIME_SECOND)
+            if (!paused)
             {
-                currentFrameIterator++;
-                nextFrameIterator++;
-                turnTime -= config::TURN_TIME_SECOND;
-                turnCount++;
-                tools::log(std::to_string(turnCount));
+                float dt = deltaClock.restart().asSeconds();
+                turnTime += dt;
+                if (turnTime > config::TURN_TIME_SECOND)
+                {
+                    currentFrameIterator++;
+                    nextFrameIterator++;
+                    turnTime -= config::TURN_TIME_SECOND;
+                    turnCount++;
+                    tools::log(std::to_string(turnCount));
 
-                if (nextFrameIterator == frames.end())
-                    break;
+                    if (nextFrameIterator == gamefeedback.frames.end())
+                        break;
+                }
             }
 
             sf::Event event;
@@ -63,16 +70,49 @@ void Environment::run()
             {
                 if (event.type == sf::Event::Closed)
                     window.close();
+
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                {
+                    onPressingMouseButton(brainDrawer, gamefeedback, currentFrameIterator, event.mouseButton.x, event.mouseButton.y);
+                }
+
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+                {
+                    paused = !paused;
+                    tools::log(paused ? "paused" : "unpaused");
+                }
             }
-            window.clear(config::BACKGROUND_COLOR);
-            updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / config::TURN_TIME_SECOND);
-            window.display();
+            if (!paused)
+            {
+                window.clear(config::BACKGROUND_COLOR);
+                updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / config::TURN_TIME_SECOND);
+                window.display();
+            }
         }
         tools::log("end of display");
     }
     else
     {
         tools::log("not recording ?");
+    }
+}
+
+void Environment::onPressingMouseButton(BrainDrawer& brainDrawer, GameFeedback& gameFeedback, std::vector<Frame>::iterator& frameIterator, int x, int y)
+{
+    for (auto& frameCreature : frameIterator->creatures)
+    {
+        if (tools::squaredDist(x, y, frameCreature.position.x, frameCreature.position.y) < config::CREATURE_RADIUS * config::CREATURE_RADIUS)
+        {
+            for (auto& creature : gameFeedback.creatures)
+            {
+                if (creature.getId() == frameCreature.id)
+                {
+                    brainDrawer.drawBrain(creature.getBrain());
+                    break;
+                }
+            }
+            break;
+        }
     }
 }
 

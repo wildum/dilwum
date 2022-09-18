@@ -36,6 +36,7 @@ public:
     const int getRadius() const {return m_radius;}
     const int getDeadAt() const {return m_deadAt;}
     const float getScore() const {return m_score;}
+    const int getId() const {return m_id;}
     Brain& getBrain() {return m_brain;}
     void decayHealth(int turn);
     const bool isAlive() const {return m_isAlive;}
