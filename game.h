@@ -19,6 +19,7 @@ private:
     bool updateCreatures(int turn);
     void updateFood();
     void performCreaturesAction();
+    void logGameInfo(int currentGeneration);
     std::vector<Food> m_food;
     std::vector<Creature> m_creatures;
     Ga ga;

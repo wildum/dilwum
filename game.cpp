@@ -31,7 +31,6 @@ std::vector<Frame> Game::run()
         int turn = 0;
         bool alive = true;
         initFood();
-        tools::log("generation: " + std::to_string(turn));
         while (turn < config::GAME_TURN && alive)
         {
             alive = updateCreatures(turn);
@@ -44,11 +43,32 @@ std::vector<Frame> Game::run()
             }
             turn++;
         }
+        logGameInfo(currentGeneration);
         // changes are applied directly on the pop
         ga.computeNextGen(m_creatures, turn);
+        currentGeneration++;
     }
 
     return frames;
+}
+
+void Game::logGameInfo(int currentGeneration)
+{
+    int survivors = 0;
+    int averageTurnSurvived = 0;
+    for (const auto& creature : m_creatures)
+    {
+        if (creature.isAlive())
+        {
+            survivors += 1;
+            averageTurnSurvived += config::GAME_TURN;
+        }
+        else
+        {
+            averageTurnSurvived += creature.getDeadAt();
+        }
+    }
+    tools::log("Generation: " + std::to_string(currentGeneration) + ": " + std::to_string(survivors) + " survived, averageTurnSurvived: " + std::to_string((float) averageTurnSurvived / m_creatures.size()));
 }
 
 void Game::addFrame(std::vector<Frame>& frames)
