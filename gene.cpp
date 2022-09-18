@@ -1,6 +1,7 @@
 #include "gene.h"
 #include "randomGen.h"
 #include "tools.h"
+#include <unordered_set>
 
 namespace gene
 {
@@ -37,5 +38,28 @@ namespace gene
         int encodedWeight = weight * 8192 + 32767.5;
         gene += encodedWeight;
         return (senderType << 31) | (senderId << 24) | (receiverType << 23) | (receiverId << 16) | (gene & 65535);
+    }
+
+    std::vector<uint32_t> correctGenome(const std::vector<uint32_t>& genome)
+    {
+        std::vector<uint32_t> correctedGenome = removeDuplicatedConnections(genome);
+        return correctedGenome;
+    }
+
+    std::vector<uint32_t> removeDuplicatedConnections(const std::vector<uint32_t>& genome)
+    {
+        std::vector<uint32_t> correctedGenome;
+
+        std::unordered_set<uint32_t> connectionSet;
+        for (const auto& gene : genome)
+        {
+            uint32_t connection = ((gene >> 31) << 31) | (((gene >> 24) & 127) << 24) | (((gene >> 23) & 1) << 23) | (((gene >> 16) & 127) << 16);
+            if (connectionSet.find(connection) == connectionSet.end())
+            {
+                connectionSet.insert(connection);
+                correctedGenome.push_back(gene);
+            }
+        }
+        return correctedGenome;
     }
 }

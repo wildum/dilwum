@@ -10,6 +10,17 @@ void Ga::computeNextGen(std::vector<Creature>& creatures, int turn)
     selection(creatures);
     crossover(creatures);
     mutation(creatures, turn);
+    rebuildBrains(creatures);
+}
+
+void Ga::rebuildBrains(std::vector<Creature>& creatures)
+{
+    for (auto& creature : creatures)
+    {
+        std::vector<uint32_t> correctedGenome = gene::correctGenome(creature.getBrain().getGenome());
+        creature.getBrain().setGenome(std::move(correctedGenome));
+        creature.getBrain().buildBrain();
+    }
 }
 
 float Ga::fitness(const Creature& creature)

@@ -28,6 +28,7 @@ namespace test
         checkBrainProcess();
         checkGASelection();
         checkGA();
+        checkGenomeCorrection();
         tools::log("All tests passed");
     }
 
@@ -194,5 +195,30 @@ namespace test
         assert(creatures.size() == config::CREATURE_POP_NUMBER);
         ga.computeNextGen(creatures, 1000);
         assert(creatures.size() == config::CREATURE_POP_NUMBER);
+    }
+
+    void checkGenomeCorrection()
+    {
+        std::vector<uint32_t> genome;
+        uint32_t gene1 = gene::generateSpecificConnectionGene(1, 1, 1, 1, 3);
+        uint32_t gene2 = gene::generateSpecificConnectionGene(0, 1, 0, 1, 4);
+        uint32_t gene3 = gene::generateSpecificConnectionGene(1, 1, 0, 1, 4);
+        uint32_t gene4 = gene::generateSpecificConnectionGene(1, 1, 1, 1, -4);
+        uint32_t gene5 = gene::generateSpecificConnectionGene(1, 1, 0, 1, -1);
+        uint32_t gene6 = gene::generateSpecificConnectionGene(1, 9, 0, 4, -3);
+        uint32_t gene7 = gene::generateSpecificConnectionGene(1, 9, 0, 4, 3);
+        genome.push_back(gene1);
+        genome.push_back(gene2);
+        genome.push_back(gene3);
+        genome.push_back(gene4);
+        genome.push_back(gene5);
+        genome.push_back(gene6);
+        genome.push_back(gene7);
+        auto correctedGenome = gene::correctGenome(genome);
+        assert(correctedGenome.size() == 4);
+        assert(correctedGenome[0] == gene1);
+        assert(correctedGenome[1] == gene2);
+        assert(correctedGenome[2] == gene3);
+        assert(correctedGenome[3] == gene6);
     }
 }

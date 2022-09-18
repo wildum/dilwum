@@ -9,7 +9,7 @@
 Brain::Brain()
 {
     m_genome.clear();
-    generateGENOME();
+    generateGenome();
     buildBrain();
 }
 
@@ -19,7 +19,7 @@ Brain::Brain(const std::vector<uint32_t>& genome)
     buildBrain();
 }
 
-void Brain::generateGENOME()
+void Brain::generateGenome()
 {
     // first gene codes for the number of internal neurons and for the number of connections - total used : 16 bits
     uint32_t firstGene = RandomGen::getRandomInt(0, 65535);
@@ -32,13 +32,22 @@ void Brain::generateGENOME()
     {
         m_genome.push_back(gene::generateRadomGene(neuron::INPUT_NUMBER, m_internalNeuronsNumber, neuron::OUTPUT_NUMBER));
     }
+    m_genome = gene::correctGenome(m_genome);
 }
 
 void Brain::buildBrain()
 {
+    resetBrain();
     buildNodes();
     buildConnections();
     sortConnections();
+}
+
+void Brain::resetBrain()
+{
+    m_nodes.clear();
+    m_connections.clear();
+    m_inputValues.clear();
 }
 
 void Brain::buildNodes()

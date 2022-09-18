@@ -28,9 +28,11 @@ class Brain
     public:
         Brain();
         Brain(const std::vector<uint32_t>& genome);
+        void buildBrain();
         std::vector<uint32_t>& getGenome() {return m_genome;}
         const std::vector<Connection>& getConnection() const {return m_connections;}
         const int getInternalNeuronsNumber() const {return m_internalNeuronsNumber;}
+        void setGenome(std::vector<uint32_t>&& genome) {m_genome = genome;}
         void setHealth(int health);
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
@@ -45,8 +47,8 @@ class Brain
         std::vector<Connection> m_connections;
         int m_internalNeuronsNumber;
 
-        void generateGENOME();
-        void buildBrain();
+        void resetBrain();
+        void generateGenome();
         void buildNode(int type, int id, ConnectionSide connectionSide);
         void buildConnections();
         void buildNodes();

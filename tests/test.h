@@ -14,6 +14,7 @@ namespace test
     void checkBrainConnectionsOrdering();
     void checkGASelection();
     void checkGA();
+    void checkGenomeCorrection();
 }
 
 #endif
