@@ -61,8 +61,10 @@ void Game::logGameInfo(int currentGeneration)
 {
     int survivors = 0;
     int averageTurnSurvived = 0;
-    for (const auto& creature : m_creatures)
+    int genomeSize = 0;
+    for (auto& creature : m_creatures)
     {
+        genomeSize += creature.getBrain().getGenome().size();
         if (creature.isAlive())
         {
             survivors += 1;
@@ -73,7 +75,9 @@ void Game::logGameInfo(int currentGeneration)
             averageTurnSurvived += creature.getDeadAt();
         }
     }
-    tools::log("Generation: " + std::to_string(currentGeneration) + ": " + std::to_string(survivors) + " survived, averageTurnSurvived: " + std::to_string((float) averageTurnSurvived / m_creatures.size()));
+    tools::log("Generation: " + std::to_string(currentGeneration) + ": " + std::to_string(survivors)
+        + " survived, averageTurnSurvived: " + std::to_string((float) averageTurnSurvived / m_creatures.size())
+        + ", genome average size: " + std::to_string((float) genomeSize / m_creatures.size()));
 }
 
 void Game::addFrame(std::vector<Frame>& frames)

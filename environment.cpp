@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 sf::Image Environment::creatureImage;
 sf::Texture Environment::creatureTexture;
 sf::Font Environment::debugFont;
@@ -27,6 +29,9 @@ void Environment::run()
     Game game;
 
     GameFeedback gamefeedback = game.run();
+
+    tools::log("Press enter to continue...");
+    std::cin.get(); // wait for user to continue
 
     int turnCount = 1;
 

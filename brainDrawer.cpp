@@ -32,7 +32,9 @@ void BrainDrawer::drawBrain(Brain& brain)
     sf::RenderWindow window(sf::VideoMode(WINDOWX, WINDOWY), "Brain");
 
     buildNodes(genome);
+    tools::log("Number of nodes involved : " + std::to_string(m_nodes.size()));
     buildConnections(genome);
+    tools::log("Number of connections involved : " + std::to_string(m_connections.size()));
 
     bool pressingMouseButton = false;
     while (window.isOpen())

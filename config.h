@@ -10,7 +10,7 @@ namespace config
     const int GENOME_SIZE_MAX = 50; // max 8 bits
     const int INTERNAL_NEURON_NUMBER_MAX = 15; // max 8 bits
 
-    const int GENERATIONS = 30;
+    const int GENERATIONS = 10;
     const float GA_POP_RETAINED_RATIO = 0.5;
     const float GA_MUTATION_RATE_MIN = 0.01;
     const float GA_MUTATION_RATE_MAX = 0.2;
@@ -21,7 +21,7 @@ namespace config
     const int GAME_TURN = 200;
 
     const int CREATURE_RADIUS = 9;
-    const int CREATURE_POP_NUMBER = 100;
+    const int CREATURE_POP_NUMBER = 300;
     const int CREATURE_HEALTH = 100;
     const int CREATURE_SPEED = 6;
     const int CREATURE_ROTATION_DEGREE = 30;
@@ -30,8 +30,8 @@ namespace config
     const int CREATURE_ANTENNA_Y_OFFSET = 3;
     const int CREATURE_ANTENNA_X_OFFSET = 4;
 
-    const int FOOD_NUMBER_MIN = 70;
-    const int FOOD_NUMBER_MAX = 100;
+    const int FOOD_NUMBER_MIN = 150;
+    const int FOOD_NUMBER_MAX = 200;
     const int FOOD_VALUE_MIN = 5;
     const int FOOD_VALUE_MAX = 20;
     const int FOOD_RADIUS = 20;
