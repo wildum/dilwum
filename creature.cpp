@@ -9,6 +9,13 @@ Creature::Creature(Vec pos, int angle, size_t id, const std::vector<uint32_t>& g
 {
 }
 
+void Creature::reset()
+{
+    m_deadAt = -1;
+    m_isAlive = true;
+    m_health = config::CREATURE_HEALTH;
+}
+
 void Creature::pickRandomAction()
 {
     m_action = static_cast<Output>(RandomGen::getRandomInt(0, neuron::OUTPUT_NUMBER-1));
@@ -30,11 +37,14 @@ void Creature::eat(std::vector<Food>& food)
 
 void Creature::decayHealth(int turn)
 {
-    m_health = std::max(m_health-1, 0);
-    if (m_health <= 0)
+    if (m_isAlive)
     {
-        m_deadAt = turn;
-        m_isAlive = false;
+        m_health = std::max(m_health-1, 0);
+        if (m_health <= 0)
+        {
+            m_deadAt = turn;
+            m_isAlive = false;
+        }
     }
 }
 

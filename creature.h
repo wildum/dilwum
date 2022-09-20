@@ -22,6 +22,7 @@ class Creature
 public:
     Creature(Vec pos, int angle, size_t id);
     Creature(Vec pos, int angle, size_t id, const std::vector<uint32_t>& genome);
+    void reset();
     void pickRandomAction();
     void pickAction();
     void performAction(std::vector<Food>& food);

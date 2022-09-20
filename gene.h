@@ -15,6 +15,7 @@ namespace gene
         RECEIVER_INTERNAL, RECEIVER_OUTPUT
     };
     uint32_t generateRadomGene(int inputNumber, int internalNumber, int outputNumber);
+    uint32_t correctGeneNoInternalLimit(uint32_t gene, int inputNumber, int outputNumber);
     uint32_t correctGene(uint32_t gene, int inputNumber, int internalNumber, int outputNumber);
     uint32_t generateSpecificConnectionGene(int senderType, int senderId, int receiverType, int receiverId, float weight);
     std::vector<uint32_t> correctGenome(const std::vector<uint32_t>& genome);

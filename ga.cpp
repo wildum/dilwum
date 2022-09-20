@@ -4,22 +4,24 @@
 #include "gene.h"
 #include <algorithm>
 #include <vector>
+#include <unordered_set>
 
 void Ga::computeNextGen(std::vector<Creature>& creatures, int turn)
 {
     selection(creatures);
     crossover(creatures);
     mutation(creatures, turn);
-    rebuildBrains(creatures);
+    resetPopulation(creatures);
 }
 
-void Ga::rebuildBrains(std::vector<Creature>& creatures)
+void Ga::resetPopulation(std::vector<Creature>& creatures)
 {
     for (auto& creature : creatures)
     {
         std::vector<uint32_t> correctedGenome = gene::correctGenome(creature.getBrain().getGenome());
         creature.getBrain().setGenome(std::move(correctedGenome));
         creature.getBrain().buildBrain();
+        creature.reset();
     }
 }
 
@@ -51,16 +53,36 @@ void Ga::crossover(std::vector<Creature>& creatures)
         int parent1Index = RandomGen::getRandomInt(0, parentMaxIndex);
         int parent2Index = RandomGen::getRandomInt(0, parentMaxIndex);
         std::vector<uint32_t> dna;
-        for (int i = 0; i < std::max(creatures[parent1Index].getBrain().getGenome().size(), creatures[parent2Index].getBrain().getGenome().size()); i++)
+        std::unordered_set<uint32_t> connectionSet;
+        for (const auto& gene : creatures[parent1Index].getBrain().getGenome())
         {
-            int parentIndex = RandomGen::flipCoin() ? parent1Index : parent2Index;
-            if (i < creatures[parentIndex].getBrain().getGenome().size())
+            connectionSet.insert(((gene >> 31) << 31) | (((gene >> 24) & 127) << 24) | (((gene >> 23) & 1) << 23) | (((gene >> 16) & 127) << 16));
+        }
+        // if common then add, else 1/2 to add
+        for (const auto& gene : creatures[parent2Index].getBrain().getGenome())
+        {
+            uint32_t connection = ((gene >> 31) << 31) | (((gene >> 24) & 127) << 24) | (((gene >> 23) & 1) << 23) | (((gene >> 16) & 127) << 16);
+            auto it = connectionSet.find(connection);
+            if (it != connectionSet.end())
             {
-                dna.push_back(creatures[parentIndex].getBrain().getGenome()[i]);
+                dna.push_back(gene);
+                connectionSet.erase(connection);
+            }
+            else if (RandomGen::flipCoin())
+            {
+                dna.push_back(gene);
+            }
+        }
+        // 1/2 to add
+        for (const auto& gene : creatures[parent1Index].getBrain().getGenome())
+        {
+            uint32_t connection = ((gene >> 31) << 31) | (((gene >> 24) & 127) << 24) | (((gene >> 23) & 1) << 23) | (((gene >> 16) & 127) << 16);
+            if (connectionSet.find(connection) != connectionSet.end() && RandomGen::flipCoin())
+            {
+                dna.push_back(gene);
             }
         }
         Creature creature = Factory::createCreature(std::move(dna));
-        creature.getBrain().setInternalNeuronNumber(std::max(creatures[parent1Index].getBrain().getInternalNeuronsNumber(), creatures[parent2Index].getBrain().getInternalNeuronsNumber()));
         creatures.emplace_back(creature);
     }
 }
@@ -83,7 +105,7 @@ void Ga::mutation(std::vector<Creature>& creatures, int turn)
                 // changed = true;
                 int bitChanged = RandomGen::getRandomInt(0, 31);
                 creature.getBrain().getGenome()[i] ^= 1UL << bitChanged;
-                creature.getBrain().getGenome()[i] = gene::correctGene(creature.getBrain().getGenome()[i], neuron::INPUT_NUMBER, creature.getBrain().getInternalNeuronsNumber(), neuron::OUTPUT_NUMBER);
+                creature.getBrain().getGenome()[i] = gene::correctGeneNoInternalLimit(creature.getBrain().getGenome()[i], neuron::INPUT_NUMBER, neuron::OUTPUT_NUMBER);
             }
         }
         // if (tempTest != 0)

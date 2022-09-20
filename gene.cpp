@@ -12,6 +12,22 @@ namespace gene
         return correctGene(gene, inputNumber, internalNumber, outputNumber);
     }
 
+    uint32_t correctGeneNoInternalLimit(uint32_t gene, int inputNumber, int outputNumber)
+    {
+        int senderType = gene >> 31;
+        int receiverType = (gene >> 23) & 1;
+        int senderId = (gene >> 24) & 127;
+        int receiverId = (gene >> 16) & 127;
+
+        if (senderType == SenderType::SENDER_INPUT)
+            senderId = tools::map(senderId, 127, inputNumber-1);
+
+        if (receiverType == ReceiverType::RECEIVER_OUTPUT)
+            receiverId = tools::map(receiverId, 127, outputNumber-1);
+
+        return (senderType << 31) | (senderId << 24) | (receiverType << 23) | (receiverId << 16) | (gene & 65535);
+    }
+
     uint32_t correctGene(uint32_t gene, int inputNumber, int internalNumber, int outputNumber)
     {
         int senderType = gene >> 31;

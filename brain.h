@@ -31,21 +31,18 @@ class Brain
         void buildBrain();
         std::vector<uint32_t>& getGenome() {return m_genome;}
         const std::vector<Connection>& getConnection() const {return m_connections;}
-        const int getInternalNeuronsNumber() const {return m_internalNeuronsNumber;}
         void setGenome(std::vector<uint32_t>&& genome) {m_genome = genome;}
         void setHealth(int health);
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
         void setRightAntennaTouch(AntennaTouch rightTouch);
         void process();
-        void setInternalNeuronNumber(int internalNeuronNumber) {m_internalNeuronsNumber = internalNeuronNumber;}
         Output pickAction();
 
     private:
         std::vector<uint32_t> m_genome;
         std::vector<Node> m_nodes;
         std::vector<Connection> m_connections;
-        int m_internalNeuronsNumber;
 
         void resetBrain();
         void generateGenome();

@@ -10,7 +10,7 @@ public:
     void selection(std::vector<Creature>& creatures);
     void crossover(std::vector<Creature>& creatures);
     void mutation(std::vector<Creature>& creatures, int turn);
-    void rebuildBrains(std::vector<Creature>& creatures);
+    void resetPopulation(std::vector<Creature>& creatures);
     inline float fitness(const Creature& creature);
 };
 
