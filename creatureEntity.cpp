@@ -6,9 +6,9 @@ CreatureEntity::CreatureEntity(const FrameCreature& frameCreature, const sf::Tex
     id = frameCreature.id;
     shape.setTexture(texture); // could make it smooth
     shape.setOrigin(sf::Vector2f(10.f, 16.f));
-    debugShape.setRadius(config::CREATURE_RADIUS);
+    debugShape.setRadius(Config::getCREATURE_RADIUS());
     debugShape.setFillColor(sf::Color::Red);
-    debugShape.setOrigin(config::CREATURE_RADIUS, config::CREATURE_RADIUS);
+    debugShape.setOrigin(Config::getCREATURE_RADIUS(), Config::getCREATURE_RADIUS());
     healthText.setFillColor(sf::Color::Blue);
     healthText.setFont(font);
     healthText.setCharacterSize(10);

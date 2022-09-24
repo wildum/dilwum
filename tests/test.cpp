@@ -165,7 +165,7 @@ namespace test
     {
         Ga ga;
         std::vector<Creature> creatures;
-        for (int i = 0; i < config::CREATURE_POP_NUMBER; i++)
+        for (int i = 0; i < Config::getPOP_NUMBER(); i++)
         {
             Creature c = Creature({0, 0}, 0, i);
             c.setHealth(i);
@@ -174,16 +174,16 @@ namespace test
         auto rng = std::default_random_engine {};
         std::shuffle(std::begin(creatures), std::end(creatures), rng);
         ga.selection(creatures);
-        assert(creatures.size() == config::CREATURE_POP_NUMBER / 2);
-        assert(creatures[0].getHealth() == config::CREATURE_POP_NUMBER - 1);
-        assert(creatures[1].getHealth() == config::CREATURE_POP_NUMBER - 2);
+        assert(creatures.size() == Config::getPOP_NUMBER() / 2);
+        assert(creatures[0].getHealth() == Config::getPOP_NUMBER() - 1);
+        assert(creatures[1].getHealth() == Config::getPOP_NUMBER() - 2);
     }
 
     void checkGA()
     {
         Ga ga;
         std::vector<Creature> creatures;
-        for (int i = 0; i < config::CREATURE_POP_NUMBER; i++)
+        for (int i = 0; i < Config::getPOP_NUMBER(); i++)
         {
             Creature c = Creature({0, 0}, 0, i);
             c.setHealth(i);
@@ -192,9 +192,9 @@ namespace test
         auto rng = std::default_random_engine {};
         std::shuffle(std::begin(creatures), std::end(creatures), rng);
         ga.computeNextGen(creatures, 0);
-        assert(creatures.size() == config::CREATURE_POP_NUMBER);
+        assert(creatures.size() == Config::getPOP_NUMBER());
         ga.computeNextGen(creatures, 1000);
-        assert(creatures.size() == config::CREATURE_POP_NUMBER);
+        assert(creatures.size() == Config::getPOP_NUMBER());
     }
 
     void checkGenomeCorrection()

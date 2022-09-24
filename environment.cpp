@@ -57,11 +57,11 @@ void Environment::run()
             {
                 float dt = deltaClock.restart().asSeconds();
                 turnTime += dt;
-                if (turnTime > config::TURN_TIME_SECOND)
+                if (turnTime > Config::getTURN_TIME_SECOND())
                 {
                     currentFrameIterator++;
                     nextFrameIterator++;
-                    turnTime -= config::TURN_TIME_SECOND;
+                    turnTime -= Config::getTURN_TIME_SECOND();
                     turnCount++;
                     tools::log(std::to_string(turnCount));
 
@@ -89,8 +89,8 @@ void Environment::run()
             }
             if (!paused)
             {
-                window.clear(config::BACKGROUND_COLOR);
-                updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / config::TURN_TIME_SECOND);
+                window.clear(Config::getBACKGROUND_COLOR());
+                updateEntities(window, creatureMap, foodMap, currentFrameIterator, nextFrameIterator, turnTime / Config::getTURN_TIME_SECOND());
                 window.display();
             }
         }
@@ -106,7 +106,7 @@ void Environment::onPressingMouseButton(BrainDrawer& brainDrawer, GameFeedback& 
 {
     for (auto& frameCreature : frameIterator->creatures)
     {
-        if (tools::squaredDist(x, y, frameCreature.position.x, frameCreature.position.y) < config::CREATURE_RADIUS * config::CREATURE_RADIUS)
+        if (tools::squaredDist(x, y, frameCreature.position.x, frameCreature.position.y) < Config::getCREATURE_RADIUS() * Config::getCREATURE_RADIUS())
         {
             for (auto& creature : gameFeedback.creatures)
             {

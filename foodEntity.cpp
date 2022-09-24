@@ -4,9 +4,9 @@
 FoodEntity::FoodEntity(const FrameFood& frameFood, const sf::Font& font)
 {
     id = frameFood.id;
-    shape.setRadius(config::FOOD_RADIUS);
+    shape.setRadius(Config::getFOOD_RADIUS());
     updateColor(frameFood);
-    shape.setOrigin(config::FOOD_RADIUS, config::FOOD_RADIUS);
+    shape.setOrigin(Config::getFOOD_RADIUS(), Config::getFOOD_RADIUS());
     shape.setPosition(frameFood.position.x, frameFood.position.y);
     valueText.setPosition(frameFood.position.x, frameFood.position.y);
     valueText.setFillColor(sf::Color::Blue);
@@ -17,8 +17,8 @@ FoodEntity::FoodEntity(const FrameFood& frameFood, const sf::Font& font)
 
 void FoodEntity::updateColor(const FrameFood& frameFood)
 {
-    sf::Color color = config::FOOD_COLOR;
-    color.a = std::max(frameFood.value * 255 / config::FOOD_VALUE_MAX, 10);
+    sf::Color color = Config::getFOOD_COLOR();
+    color.a = std::max(frameFood.value * 255 / Config::getFOOD_VALUE_MAX(), 10);
     shape.setFillColor(color);
 }
 

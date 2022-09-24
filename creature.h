@@ -2,7 +2,7 @@
 #define CREATURE
 
 #include "vec.h"
-#include "config.h"
+#include "config/config.h"
 #include "neuron.h"
 #include "food.h"
 #include "brain.h"
@@ -55,9 +55,9 @@ private:
     int m_angle;
     Output m_action;
     size_t m_id;
-    int m_speed = config::CREATURE_SPEED;
-    int m_radius = config::CREATURE_RADIUS;
-    int m_health = config::CREATURE_HEALTH;
+    int m_speed = Config::getCREATURE_SPEED();
+    int m_radius = Config::getCREATURE_RADIUS();
+    int m_health = Config::getCREATURE_HEALTH();
     bool m_isAlive = true;
     int m_deadAt = -1;
     float m_score;

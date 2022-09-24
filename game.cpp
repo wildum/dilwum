@@ -1,5 +1,5 @@
 #include "game.h"
-#include "config.h"
+#include "config/config.h"
 #include "randomGen.h"
 #include "factory.h"
 #include "tools.h"
@@ -20,9 +20,9 @@ GameFeedback Game::run()
 
     int currentGeneration = 0;
 
-    while (currentGeneration < config::GENERATIONS)
+    while (currentGeneration < Config::getGENERATIONS())
     {
-        bool lastRun = currentGeneration == config::GENERATIONS - 1;
+        bool lastRun = currentGeneration == Config::getGENERATIONS() - 1;
         if (lastRun)
         {
             addFrame(gameFeedback.frames);
@@ -31,7 +31,7 @@ GameFeedback Game::run()
         int turn = 0;
         bool alive = true;
         initFood();
-        while (turn < config::GAME_TURN && alive)
+        while (turn < Config::getGAME_TURN() && alive)
         {
             alive = updateCreatures(turn);
             updateFood();
@@ -68,7 +68,7 @@ void Game::logGameInfo(int currentGeneration)
         if (creature.isAlive())
         {
             survivors += 1;
-            averageTurnSurvived += config::GAME_TURN;
+            averageTurnSurvived += Config::getGAME_TURN();
         }
         else
         {
@@ -96,7 +96,7 @@ void Game::addFrame(std::vector<Frame>& frames)
 void Game::initFood()
 {
     m_food.clear();
-    int foodNumber = RandomGen::getRandomInt(config::FOOD_NUMBER_MIN, config::FOOD_NUMBER_MAX);
+    int foodNumber = RandomGen::getRandomInt(Config::getFOOD_NUMBER_MIN(), Config::getFOOD_NUMBER_MAX());
     for (int i = 0; i < foodNumber; i++)
     {
         m_food.emplace_back(Factory::createRandomFood());
@@ -106,7 +106,7 @@ void Game::initFood()
 void Game::initCreatures()
 {
     m_creatures.clear();
-    for (int i = 0; i < config::CREATURE_POP_NUMBER; i++)
+    for (int i = 0; i < Config::getPOP_NUMBER(); i++)
     {
         m_creatures.emplace_back(Factory::createRandomCreature());
     }

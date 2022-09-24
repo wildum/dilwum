@@ -4,7 +4,7 @@
 #include <array>
 #include <vector>
 #include "neuron.h"
-#include "config.h"
+#include "config/config.h"
 
 struct Node
 {

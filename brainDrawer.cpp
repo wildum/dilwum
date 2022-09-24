@@ -58,7 +58,7 @@ void BrainDrawer::drawBrain(Brain& brain)
                 onPressingMouseButton(event.mouseMove.x, event.mouseMove.y);
             }
         }
-        window.clear(config::BACKGROUND_COLOR);
+        window.clear(Config::getBACKGROUND_COLOR());
         drawConnections(window);
         drawNodes(window);
         window.display();

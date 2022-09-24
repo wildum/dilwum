@@ -13,7 +13,7 @@ void Creature::reset()
 {
     m_deadAt = -1;
     m_isAlive = true;
-    m_health = config::CREATURE_HEALTH;
+    m_health = Config::getCREATURE_HEALTH();
 }
 
 void Creature::pickRandomAction()
@@ -29,7 +29,7 @@ void Creature::eat(std::vector<Food>& food)
         if (mouthPosition.squaredDist(foodUnit.getPosition()) < (foodUnit.getRadius()) * (foodUnit.getRadius()))
         {
             foodUnit.decayValue();
-            m_health = std::min(m_health + config::CREATURE_EATING_VALUE, config::CREATURE_HEALTH);
+            m_health = std::min(m_health + Config::getCREATURE_EATING_VALUE(), Config::getCREATURE_HEALTH());
             break;
         }
     }
@@ -53,10 +53,10 @@ void Creature::performAction(std::vector<Food>& food)
     switch (m_action)
     {
     case ROTATE_LEFT:
-        m_angle += config::CREATURE_ROTATION_DEGREE;
+        m_angle += Config::getCREATURE_ROTATION_DEGREE();
         break;
     case ROTATE_RIGHT:
-        m_angle -= config::CREATURE_ROTATION_DEGREE;
+        m_angle -= Config::getCREATURE_ROTATION_DEGREE();
         break;
     case WAIT:
         break;
@@ -74,19 +74,19 @@ void Creature::performAction(std::vector<Food>& food)
 
 Vec Creature::getLeftAntennaPosition()
 {
-    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (config::CREATURE_RADIUS + config::CREATURE_ANTENNA_X_OFFSET),
-        m_position.y + sin(tools::degreesToRadian(m_angle)) * (config::CREATURE_RADIUS - config::CREATURE_ANTENNA_Y_OFFSET)};
+    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_X_OFFSET()),
+        m_position.y + sin(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() - Config::getCREATURE_ANTENNA_Y_OFFSET())};
 }
 
 Vec Creature::getRightAntennaPosition()
 {
-    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (config::CREATURE_RADIUS + config::CREATURE_ANTENNA_X_OFFSET),
-        m_position.y + sin(tools::degreesToRadian(m_angle)) * (config::CREATURE_RADIUS + config::CREATURE_ANTENNA_Y_OFFSET)};
+    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_X_OFFSET()),
+        m_position.y + sin(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_Y_OFFSET())};
 }
 
 Vec Creature::getMouthPosition()
 {
-    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * config::CREATURE_RADIUS, m_position.y + sin(tools::degreesToRadian(m_angle)) * config::CREATURE_RADIUS};
+    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * Config::getCREATURE_RADIUS(), m_position.y + sin(tools::degreesToRadian(m_angle)) * Config::getCREATURE_RADIUS()};
 }
 
 AntennaTouch Creature::antennaTouchFeedback(const Vec& antennaPosition, std::vector<Food>& food, std::vector<Creature>& creatures)

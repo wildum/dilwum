@@ -2,12 +2,24 @@
 #include "tests/test.h"
 #include "tools.h"
 #include "brainDrawer.h"
+#include "config/config.h"
 #include <string.h>
 
 bool Environment::debugMode = false;
 
 int main(int argc, char *argv[])
 {
+    std::string configPath = "config/config.json";
+    try
+    {
+        Config::readConfig(configPath);
+    }
+    catch (...)
+    {
+        tools::log("cant read the config");
+        return -1;
+    }
+    
     if (argc == 2 && strcmp(argv[1], "test") == 0)
     {
         test::runAllTests();

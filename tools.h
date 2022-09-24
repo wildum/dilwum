@@ -2,7 +2,7 @@
 #define TOOLS
 
 #include <iostream>
-#include "config.h"
+#include "config/config.h"
 #include <math.h>
 
 namespace tools
@@ -15,7 +15,7 @@ namespace tools
 
     inline bool floatCompare(float a, float b)
     {
-        return fabs(a-b) < config::EPSILON;
+        return fabs(a-b) < Config::getEPSILON();
     }
 
     template<typename T>

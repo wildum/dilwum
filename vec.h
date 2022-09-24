@@ -65,15 +65,15 @@ public:
             x = radius;
         if (y < radius)
             y = radius;
-        if (x > config::MAP_WIDTH-radius)
-            x = config::MAP_WIDTH-radius;
-        if (y > config::MAP_HEIGHT-radius)
-            y = config::MAP_HEIGHT-radius;
+        if (x > Config::getMAP_WIDTH()-radius)
+            x = Config::getMAP_WIDTH()-radius;
+        if (y > Config::getMAP_HEIGHT()-radius)
+            y = Config::getMAP_HEIGHT()-radius;
     }
 
     const bool isOut() const
     {
-        return x <= 0 || x >= config::MAP_WIDTH || y <= 0 || y > config::MAP_HEIGHT;
+        return x <= 0 || x >= Config::getMAP_WIDTH() || y <= 0 || y > Config::getMAP_HEIGHT();
     }
 };
 

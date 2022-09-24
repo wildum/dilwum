@@ -27,12 +27,12 @@ void Ga::resetPopulation(std::vector<Creature>& creatures)
 
 float Ga::fitness(const Creature& creature)
 {
-    return creature.isAlive() ? creature.getHealth() : creature.getDeadAt() / (float) config::GAME_TURN;
+    return creature.isAlive() ? creature.getHealth() : creature.getDeadAt() / (float) Config::getGAME_TURN();
 }
 
 void Ga::selection(std::vector<Creature>& creatures)
 {
-    int creaturesToKeep = config::CREATURE_POP_NUMBER * config::GA_POP_RETAINED_RATIO;
+    int creaturesToKeep = Config::getPOP_NUMBER() * Config::getGA_POP_RETAINED_RATIO();
     for (auto& creature : creatures)
     {
         float score = fitness(creature);
@@ -47,7 +47,7 @@ void Ga::selection(std::vector<Creature>& creatures)
 void Ga::crossover(std::vector<Creature>& creatures)
 {
     int parentMaxIndex = creatures.size() - 1;
-    while (creatures.size() < config::CREATURE_POP_NUMBER)
+    while (creatures.size() < Config::getPOP_NUMBER())
     {
         // ignore collisions
         int parent1Index = RandomGen::getRandomInt(0, parentMaxIndex);
@@ -89,7 +89,7 @@ void Ga::crossover(std::vector<Creature>& creatures)
 
 void Ga::mutation(std::vector<Creature>& creatures, int turn)
 {
-    float mutationRate = tools::lerp(config::GA_MUTATION_RATE_MAX, config::GA_MUTATION_RATE_MIN, (float) turn / config::GAME_TURN);
+    float mutationRate = tools::lerp(Config::getGA_MUTATION_RATE_MAX(), Config::getGA_MUTATION_RATE_MIN(), (float) turn / Config::getGAME_TURN());
     // uncomment if testing needed
     // double test = 0;
     // int testMutatedCrea = 0;

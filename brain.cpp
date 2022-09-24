@@ -23,8 +23,8 @@ void Brain::generateGenome()
 {
     // first gene codes for the number of internal neurons and for the number of connections - total used : 16 bits
     uint32_t firstGene = RandomGen::getRandomInt(0, 65535);
-    uint32_t connectionsNumber = tools::map(firstGene & 255, 255, config::GENOME_SIZE_MAX);
-    uint32_t internalNeuronsNumber = tools::map(firstGene >> 8, 255, config::INTERNAL_NEURON_NUMBER_MAX);
+    uint32_t connectionsNumber = tools::map(firstGene & 255, 255, Config::getGENOME_SIZE_MAX());
+    uint32_t internalNeuronsNumber = tools::map(firstGene >> 8, 255, Config::getINTERNAL_NEURON_NUMBER_MAX());
     // make sure that the output is connected?
     // dont put the original gene
     // m_genome.push_back(m_connectionsNumber | m_internalNeuronsNumber << 8);
@@ -66,7 +66,7 @@ void Brain::buildNodes()
 
 void Brain::setHealth(int health)
 {
-    m_inputValues[Input::HEALTH] = (float) health / config::CREATURE_HEALTH;
+    m_inputValues[Input::HEALTH] = (float) health / Config::getCREATURE_HEALTH();
 }
 
 void Brain::setTaste(Taste taste)

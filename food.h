@@ -2,7 +2,7 @@
 #define FOOD
 
 #include "vec.h"
-#include "config.h"
+#include "config/config.h"
 
 struct FrameFood
 {
@@ -25,7 +25,7 @@ private:
     Vec m_position;
     size_t m_id;
     int m_value;
-    int m_radius = config::FOOD_RADIUS;
+    int m_radius = Config::getFOOD_RADIUS();
 };
 
 #endif
