@@ -14,6 +14,7 @@ class Environment
 {
 public:
     static void run();
+    static void run(const std::string& fileName);
     static sf::Image creatureImage;
     static sf::Texture creatureTexture;
     static sf::Font debugFont;
@@ -21,6 +22,7 @@ public:
 private:
     static void initialize();
     static void loadAssets();
+    static void play(GameFeedback& gamefeedback);
     static void updateEntities(sf::RenderWindow& window, 
         std::unordered_map<size_t, CreatureEntity>& creatures, 
         std::unordered_map<size_t, FoodEntity>& foods,

@@ -4,6 +4,9 @@
 #include <math.h>
 #include "tools.h"
 
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/access.hpp>
+
 class Vec
 {
 public:
@@ -74,6 +77,14 @@ public:
     const bool isOut() const
     {
         return x <= 0 || x >= Config::getMAP_WIDTH() || y <= 0 || y > Config::getMAP_HEIGHT();
+    }
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & x;
+        ar & y;
     }
 };
 

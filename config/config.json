@@ -5,7 +5,7 @@
     "genomeMaxSize" : 50,
     "internalNeuronNumberMax" : 15,
     "ga" : {
-        "gen" : 100,
+        "gen" : 10,
         "popRetainedRatio" : 0.5,
         "mutationRateMin" : 0.01,
         "mutationRateMax" : 0.2

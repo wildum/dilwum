@@ -3,12 +3,22 @@
 
 #include "vec.h"
 #include "config/config.h"
+#include <boost/serialization/access.hpp>
 
 struct FrameFood
 {
     size_t id;
     int value;
     Vec position;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & id;
+        ar & value;
+        ar & position;
+    }
 };
 
 class Food
@@ -26,6 +36,16 @@ private:
     size_t m_id;
     int m_value;
     int m_radius = Config::getFOOD_RADIUS();
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & m_position;
+        ar & m_id;
+        ar & m_value;
+        ar & m_radius;
+    }
 };
 
 #endif

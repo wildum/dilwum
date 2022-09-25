@@ -6,12 +6,7 @@
 #include "creature.h"
 #include "frame.h"
 #include "ga.h"
-
-struct GameFeedback
-{
-    std::vector<Frame> frames;
-    std::vector<Creature> creatures;
-};
+#include "gameFeedback.h"
 
 class Game
 {

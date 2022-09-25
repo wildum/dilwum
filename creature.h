@@ -8,6 +8,7 @@
 #include "brain.h"
 
 #include <vector>
+#include <boost/serialization/access.hpp>
 
 struct FrameCreature
 {
@@ -15,11 +16,22 @@ struct FrameCreature
     Vec position;
     int angle;
     int health;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & id;
+        ar & position;
+        ar & angle;
+        ar & health;
+    }
 };
 
 class Creature
 {
 public:
+    Creature();
     Creature(Vec pos, int angle, size_t id);
     Creature(Vec pos, int angle, size_t id, const std::vector<uint32_t>& genome);
     void reset();
@@ -61,6 +73,23 @@ private:
     bool m_isAlive = true;
     int m_deadAt = -1;
     float m_score;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & m_brain;
+        ar & m_position;
+        ar & m_angle;
+        ar & m_action;
+        ar & m_id;
+        ar & m_speed;
+        ar & m_radius;
+        ar & m_health;
+        ar & m_isAlive;
+        ar & m_deadAt;
+        ar & m_score;
+    }
 };
 
 #endif

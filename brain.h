@@ -6,12 +6,26 @@
 #include "neuron.h"
 #include "config/config.h"
 
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/map.hpp>
+
 struct Node
 {
     NeuronType type;
     int id;
     bool triggered = false;
     std::vector<float> inputs; // empty the vector when sending values out
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & type;
+        ar & triggered;
+        ar & id;
+        ar & inputs;
+    }
 };
 
 struct Connection
@@ -21,6 +35,17 @@ struct Connection
     int id;
     float weight;
     bool connectedToInput = false;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & senderIndex;
+        ar & receiverIndex;
+        ar & id;
+        ar & weight;
+        ar & connectedToInput;
+    }
 };
 
 class Brain
@@ -53,6 +78,16 @@ class Brain
         float getWeightFromGene(uint32_t gene);
 
         std::map<Input, float> m_inputValues;
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & m_genome;
+            ar & m_nodes;
+            ar & m_connections;
+            ar & m_inputValues;
+        }
 };
 
 #endif

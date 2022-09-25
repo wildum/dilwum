@@ -9,6 +9,8 @@ bool Environment::debugMode = false;
 
 int main(int argc, char *argv[])
 {
+    tools::log("start program");
+
     std::string configPath = "config/config.json";
     try
     {
@@ -36,6 +38,15 @@ int main(int argc, char *argv[])
     if (argc == 2 && strcmp(argv[1], "debug") == 0)
         Environment::debugMode = true;
 
-    Environment::run();
+    if (argc > 1 && strcmp(argv[1], "replay") == 0)
+    {
+        std::string fileName = argc > 2 ? argv[2] : "lastPlay.txt";
+        Environment::run(fileName);
+    }
+    else
+    {
+        Environment::run();
+    }
+
     return 0;
 }

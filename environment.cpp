@@ -5,6 +5,7 @@
 #include "creatureEntity.h"
 #include "foodEntity.h"
 #include "brainDrawer.h"
+#include "serializer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -22,6 +23,13 @@ void Environment::initialize()
     tools::log("initialization done");
 }
 
+void Environment::run(const std::string& fileName)
+{
+    initialize();
+    GameFeedback gamefeedback = Serializer::read(fileName);
+    play(gamefeedback);
+}
+
 void Environment::run()
 {
     initialize();
@@ -33,6 +41,15 @@ void Environment::run()
     tools::log("Press enter to continue...");
     std::cin.get(); // wait for user to continue
 
+    play(gamefeedback);
+
+    tools::log("Save replay...");
+    Serializer::write(gamefeedback);
+    tools::log("Replay saved successfully");
+}
+
+void Environment::play(GameFeedback& gamefeedback)
+{
     int turnCount = 1;
 
     BrainDrawer brainDrawer;
