@@ -48,6 +48,12 @@ namespace tools
     {
         return sqrt(squaredDist(x1, y1, x2, y2));
     }
+
+    inline void pause()
+    {
+        tools::log("Press enter to continue...");
+        std::cin.get(); // wait for user to continue
+    }
 }
 
 #endif

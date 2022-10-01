@@ -13,8 +13,9 @@
 class Environment
 {
 public:
-    static void run();
-    static void run(const std::string& fileName);
+    static void runRaw();
+    static void runRework(std::string& fileName);
+    static void runReplay(std::string& fileName);
     static sf::Image creatureImage;
     static sf::Texture creatureTexture;
     static sf::Font debugFont;

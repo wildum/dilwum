@@ -41,11 +41,16 @@ int main(int argc, char *argv[])
     if (argc > 1 && strcmp(argv[1], "replay") == 0)
     {
         std::string fileName = argc > 2 ? argv[2] : "lastPlay.txt";
-        Environment::run(fileName);
+        Environment::runReplay(fileName);
+    }
+    else if (argc > 1 && strcmp(argv[1], "rework") == 0)
+    {
+        std::string fileName = argc > 2 ? argv[2] : "lastPlay.txt";
+        Environment::runRework(fileName);
     }
     else
     {
-        Environment::run();
+        Environment::runRaw();
     }
 
     return 0;

@@ -5,18 +5,19 @@
 #include "tools.h"
 #include <algorithm>
 
-void Game::initialize()
+GameFeedback Game::run(std::vector<Creature>& population)
 {
-    tools::log("start game initialization");
-    initCreatures();
-    tools::log("game initialization done");
+    m_creatures = population;
+    ga.computeNextGen(m_creatures, 0); 
+    return run();
 }
 
 GameFeedback Game::run()
 {
     GameFeedback gameFeedback;
 
-    initialize();
+    if (m_creatures.empty())
+        initCreatures();
 
     int currentGeneration = 0;
 

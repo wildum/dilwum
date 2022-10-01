@@ -23,29 +23,32 @@ void Environment::initialize()
     tools::log("initialization done");
 }
 
-void Environment::run(const std::string& fileName)
+void Environment::runReplay(std::string& fileName)
 {
     initialize();
     GameFeedback gamefeedback = Serializer::read(fileName);
     play(gamefeedback);
 }
 
-void Environment::run()
+void Environment::runRaw()
 {
     initialize();
-
     Game game;
-
     GameFeedback gamefeedback = game.run();
-
-    tools::log("Press enter to continue...");
-    std::cin.get(); // wait for user to continue
-
+    tools::pause();
     play(gamefeedback);
-
-    tools::log("Save replay...");
     Serializer::write(gamefeedback);
-    tools::log("Replay saved successfully");
+}
+
+void Environment::runRework(std::string& fileName)
+{
+    initialize();
+    Game game;
+    GameFeedback lastFeedback = Serializer::read(fileName);
+    GameFeedback gamefeedback = game.run(lastFeedback.creatures);
+    tools::pause();
+    play(gamefeedback);
+    Serializer::write(gamefeedback);
 }
 
 void Environment::play(GameFeedback& gamefeedback)

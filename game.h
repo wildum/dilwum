@@ -12,9 +12,9 @@ class Game
 {
 public:
     GameFeedback run();
+    GameFeedback run(std::vector<Creature>& population);
 private:
     void addFrame(std::vector<Frame>& frames);
-    void initialize();
     void initFood();
     void initCreatures();
     bool updateCreatures(int turn);
