@@ -118,7 +118,9 @@ void Game::performCreaturesAction()
     for (auto& creature : m_creatures)
     {
         if (creature.isAlive())
+        {
             creature.performAction(m_food);
+        }
     }
 }
 

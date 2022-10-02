@@ -29,6 +29,8 @@ namespace test
         checkGASelection();
         checkGA();
         checkGenomeCorrection();
+        checkInternalNodesCounting();
+        checkTasteSetCorrectly();
         tools::log("All tests passed");
     }
 
@@ -220,5 +222,48 @@ namespace test
         assert(correctedGenome[1] == gene2);
         assert(correctedGenome[2] == gene3);
         assert(correctedGenome[3] == gene6);
+    }
+
+    void checkInternalNodesCounting()
+    {
+        std::vector<uint32_t> genome;
+        uint32_t gene1 = gene::generateSpecificConnectionGene(1, 1, 1, 1, 3);
+        uint32_t gene2 = gene::generateSpecificConnectionGene(0, 1, 0, 1, 4);
+        uint32_t gene3 = gene::generateSpecificConnectionGene(1, 1, 0, 1, 4);
+        uint32_t gene4 = gene::generateSpecificConnectionGene(1, 1, 1, 1, -4);
+        uint32_t gene5 = gene::generateSpecificConnectionGene(1, 1, 0, 1, -1);
+        uint32_t gene6 = gene::generateSpecificConnectionGene(1, 9, 0, 4, -3);
+        uint32_t gene7 = gene::generateSpecificConnectionGene(1, 9, 0, 4, 3);
+        genome.push_back(gene1);
+        genome.push_back(gene2);
+        genome.push_back(gene3);
+        genome.push_back(gene4);
+        genome.push_back(gene5);
+        genome.push_back(gene6);
+        genome.push_back(gene7);
+        Ga ga;
+        int numberOfInternalNodes = ga.getNumberOfInternalNodes(genome);
+        assert(numberOfInternalNodes == 2);
+    }
+
+    void checkTasteSetCorrectly()
+    {
+        std::vector<Creature> creatures;
+        Creature creature{Vec{100, 50}, 30, 0};
+        std::vector<Food> food;
+        Food f2{{120, 60}, 10, 0};
+        food.push_back(f2);
+        creature.processInputs(food, creatures);
+        assert(creature.getBrain().getTaste() == 1.0);
+        food.clear();
+        creature.processInputs(food, creatures);
+        assert(creature.getBrain().getTaste() == 0.0);
+        Food f1{{130, 60}, 10, 0};
+        food.push_back(f1);
+        creature.processInputs(food, creatures);
+        assert(creature.getBrain().getTaste() == 0.0); // out of range
+        food.push_back(f2);
+        creature.processInputs(food, creatures);
+        assert(creature.getBrain().getTaste() == 1.0);
     }
 }

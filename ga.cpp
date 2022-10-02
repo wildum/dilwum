@@ -97,6 +97,7 @@ void Ga::mutation(std::vector<Creature>& creatures, int turn)
     {
         // bool changed = false;
         // int tempTest = 0;
+        int numberOfInternalNodesPossible = getNumberOfInternalNodes(creature.getBrain().getGenome())+1;
         for (int i = 0; i < creature.getBrain().getGenome().size(); i++)
         {
             if (RandomGen::getRandomFloat() < mutationRate)
@@ -105,7 +106,7 @@ void Ga::mutation(std::vector<Creature>& creatures, int turn)
                 // changed = true;
                 int bitChanged = RandomGen::getRandomInt(0, 31);
                 creature.getBrain().getGenome()[i] ^= 1UL << bitChanged;
-                creature.getBrain().getGenome()[i] = gene::correctGeneNoInternalLimit(creature.getBrain().getGenome()[i], neuron::INPUT_NUMBER, neuron::OUTPUT_NUMBER);
+                creature.getBrain().getGenome()[i] = gene::correctGene(creature.getBrain().getGenome()[i], neuron::INPUT_NUMBER, numberOfInternalNodesPossible, neuron::OUTPUT_NUMBER);
             }
         }
         // if (tempTest != 0)
@@ -114,4 +115,23 @@ void Ga::mutation(std::vector<Creature>& creatures, int turn)
     }
     // std::cout << "Gene changed : " << ((double) test / creatures.size()) * 100 << " %" << std::endl;
     // std::cout << "Creatures changed : " << ((double) testMutatedCrea / creatures.size()) * 100 << " %" << std::endl;
+}
+
+int Ga::getNumberOfInternalNodes(std::vector<unsigned int>& genome)
+{
+    std::unordered_set<int> nodes;
+    for (auto gene : genome)
+    {
+        int senderType = gene >> 31;
+        int receiverType = (gene >> 23) & 1;
+        int senderId = (gene >> 24) & 127;
+        int receiverId = (gene >> 16) & 127;
+
+        if (senderType == gene::SenderType::SENDER_INTERNAL)
+            nodes.insert(senderId);
+
+        if (receiverType == gene::ReceiverType::RECEIVER_INTERNAL)
+            nodes.insert(receiverId);
+    }
+    return nodes.size();
 }

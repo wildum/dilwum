@@ -15,6 +15,8 @@ namespace test
     void checkGASelection();
     void checkGA();
     void checkGenomeCorrection();
+    void checkInternalNodesCounting();
+    void checkTasteSetCorrectly();
 }
 
 #endif

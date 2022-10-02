@@ -12,6 +12,7 @@ public:
     void mutation(std::vector<Creature>& creatures, int turn);
     void resetPopulation(std::vector<Creature>& creatures);
     inline float fitness(const Creature& creature);
+    int getNumberOfInternalNodes(std::vector<unsigned int>& genome);
 };
 
 #endif

@@ -61,6 +61,7 @@ class Brain
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
         void setRightAntennaTouch(AntennaTouch rightTouch);
+        float getTaste() {return m_inputValues[TASTE];}
         void process();
         Output pickAction();
 

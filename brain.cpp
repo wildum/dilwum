@@ -108,6 +108,7 @@ void Brain::process()
         }
 
         m_nodes[connection.receiverIndex].inputs.push_back(outputValue * connection.weight);
+        m_nodes[connection.senderIndex].triggered = true;
     }
 }
 
@@ -116,7 +117,7 @@ Output Brain::pickAction()
     Output action;
     float bestScore = std::numeric_limits<float>::min();
 
-    for (const auto& node : m_nodes)
+    for (auto& node : m_nodes)
     {
         if (node.type == NeuronType::OUTPUT)
         {
@@ -129,6 +130,7 @@ Output Brain::pickAction()
                 bestScore = score;
                 action = static_cast<Output>(node.id);
             }
+            node.inputs.clear();
         }
     }
 
