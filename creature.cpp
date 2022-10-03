@@ -138,6 +138,7 @@ void Creature::processInputs(std::vector<Food>& food, std::vector<Creature>& cre
     m_brain.setTaste(taste(food));
     m_brain.setLeftAntennaTouch(antennaTouchFeedback(getLeftAntennaPosition(), food, creatures));
     m_brain.setRightAntennaTouch(antennaTouchFeedback(getRightAntennaPosition(), food, creatures));
+    m_brain.setRandom(RandomGen::getRandomFloat());
 }
 
 void Creature::pickAction()

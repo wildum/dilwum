@@ -21,8 +21,8 @@ class BrainDrawer
         const int WINDOWX = 1800;
         const int WINDOWY = 800;
 
-        const std::array<std::string, 4> INPUT_NAMES {{"H", "T", "LA", "RA"}};
-        const std::array<std::string, 5> OUTPUT_NAMES {{"RL", "RR", "MF", "W", "E"}};
+        const std::array<std::string, neuron::INPUT_NUMBER> INPUT_NAMES {{"H", "T", "LA", "RA", "R"}};
+        const std::array<std::string, neuron::OUTPUT_NUMBER> OUTPUT_NAMES {{"RL", "RR", "MF", "W", "E"}};
 
         struct Node
         {

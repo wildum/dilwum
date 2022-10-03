@@ -84,6 +84,11 @@ void Brain::setRightAntennaTouch(AntennaTouch rightTouch)
     m_inputValues[Input::RIGHT_ANTENNA_TOUCH] = (float) rightTouch / ANTENNATOUCH_MAX_VALUE;
 }
 
+void Brain::setRandom(float rnd)
+{
+    m_inputValues[Input::RANDOM] = rnd;
+}
+
 void Brain::process()
 {
     for (const auto& connection : m_connections)

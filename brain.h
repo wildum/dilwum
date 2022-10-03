@@ -61,6 +61,7 @@ class Brain
         void setTaste(Taste taste);
         void setLeftAntennaTouch(AntennaTouch leftTouch);
         void setRightAntennaTouch(AntennaTouch rightTouch);
+        void setRandom(float rnd);
         float getTaste() {return m_inputValues[TASTE];}
         void process();
         Output pickAction();
@@ -77,7 +78,7 @@ class Brain
         void buildNodes();
         void sortConnections();
 
-        std::map<Input, float> m_inputValues;
+        std::map<Input, float> m_inputValues; // should always be between 0 and 1
 
         friend class boost::serialization::access;
         template<class Archive>

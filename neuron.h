@@ -4,7 +4,7 @@
 namespace neuron
 {
     const int OUTPUT_NUMBER = 5;
-    const int INPUT_NUMBER = 4;
+    const int INPUT_NUMBER = 5;
 }
 
 enum Taste
@@ -35,7 +35,7 @@ enum Output
 
 enum Input
 {
-    HEALTH, TASTE, LEFT_ANTENNA_TOUCH, RIGHT_ANTENNA_TOUCH
+    HEALTH, TASTE, LEFT_ANTENNA_TOUCH, RIGHT_ANTENNA_TOUCH, RANDOM
 };
 
 #endif
