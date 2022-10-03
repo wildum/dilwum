@@ -14,6 +14,8 @@ struct FrameCreature
 {
     size_t id;
     Vec position;
+    Vec antennaLeftPosition;
+    Vec antennaRightPosition;
     int angle;
     int health;
 
@@ -57,7 +59,7 @@ public:
     Vec getLeftAntennaPosition();
     Vec getRightAntennaPosition();
     void processInputs(std::vector<Food>& food, std::vector<Creature>& creatures);
-    FrameCreature toFrameCreature() const;
+    FrameCreature toFrameCreature();
 private:
     AntennaTouch antennaTouchFeedback(const Vec& antennaPosition, std::vector<Food>& food, std::vector<Creature>& creatures);
     Taste taste(std::vector<Food>& food);

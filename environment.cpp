@@ -173,8 +173,10 @@ void Environment::updateEntities(sf::RenderWindow& window,
         {
             auto creatureEntity = creatures.find(nextCreature.id);
             Vec newPosition = Vec::lerp(currentCreature->position, nextCreature.position, time);
+            Vec newLeftAntennaPosition = Vec::lerp(currentCreature->antennaLeftPosition, nextCreature.antennaLeftPosition, time);
+            Vec newRightAntennaPosition = Vec::lerp(currentCreature->antennaRightPosition, nextCreature.antennaRightPosition, time);
             float newDirection = tools::lerp(currentCreature->angle, nextCreature.angle, time);
-            creatureEntity->second.move(newPosition);
+            creatureEntity->second.move(newPosition, newLeftAntennaPosition, newRightAntennaPosition);
             creatureEntity->second.shape.setRotation(newDirection);
             creatureEntity->second.updateText(nextCreature.health);
             creatureEntity->second.draw(window);

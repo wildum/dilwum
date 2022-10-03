@@ -1,5 +1,5 @@
 {
-    "gameTurn" : 200,
+    "gameTurn" : 300,
     "turnTimeSecond" : 0.5,
     "popNumber" : 300,
     "genomeMaxSize" : 50,
@@ -16,12 +16,12 @@
         "speed" : 6,
         "rotationDegree" : 30,
         "eatingValue" : 10,
-        "antennaYOffset" : 3,
-        "antennaXOffset" : 4
+        "antennaAngle" : 30,
+        "antennaLengthFromBody" : 10
     },
     "food" : {
-        "numberMin" : 150,
-        "numberMax" : 200,
+        "numberMin" : 50,
+        "numberMax" : 60,
         "valueMin" : 5,
         "valueMax" : 20,
         "radius" : 20

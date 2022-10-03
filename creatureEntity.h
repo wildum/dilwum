@@ -12,10 +12,12 @@ class CreatureEntity
         size_t id;
         sf::Sprite shape;
         sf::CircleShape debugShape;
+        sf::CircleShape debugShapeAntennaLeft;
+        sf::CircleShape debugShapeAntennaRight;
         sf::Text healthText;
 
         CreatureEntity(const FrameCreature& frameCreature, const sf::Texture& texture, const sf::Font& font);
-        void move(const Vec& position);
+        void move(const Vec& position, const Vec& leftAntennaPosition, const Vec& rightAntennaPosition);
         void updateText(int health);
         void draw(sf::RenderWindow& window);
 };

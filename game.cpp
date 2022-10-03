@@ -90,7 +90,7 @@ void Game::logGameInfo(int currentGeneration)
 void Game::addFrame(std::vector<Frame>& frames)
 {
     Frame frame;
-    for (const auto& creature : m_creatures)
+    for (auto& creature : m_creatures)
     {
         if (creature.isAlive())
             frame.creatures.push_back(creature.toFrameCreature());

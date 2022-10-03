@@ -78,14 +78,16 @@ void Creature::performAction(std::vector<Food>& food)
 
 Vec Creature::getLeftAntennaPosition()
 {
-    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_X_OFFSET()),
-        m_position.y + sin(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() - Config::getCREATURE_ANTENNA_Y_OFFSET())};
+    int offset = Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_LENGTH_FROM_BODY();
+    float angle = tools::degreesToRadian(m_angle + Config::getCREATURE_ANTENNA_ANGLE());
+    return {m_position.x + cos(angle) * offset, m_position.y + sin(angle) * offset};
 }
 
 Vec Creature::getRightAntennaPosition()
 {
-    return {m_position.x + cos(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_X_OFFSET()),
-        m_position.y + sin(tools::degreesToRadian(m_angle)) * (Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_Y_OFFSET())};
+    int offset = Config::getCREATURE_RADIUS() + Config::getCREATURE_ANTENNA_LENGTH_FROM_BODY();
+    float angle = tools::degreesToRadian(m_angle - Config::getCREATURE_ANTENNA_ANGLE());
+    return {m_position.x + cos(angle) * offset, m_position.y + sin(angle) * offset};
 }
 
 Vec Creature::getMouthPosition()
@@ -147,12 +149,14 @@ void Creature::pickAction()
     m_action = m_brain.pickAction();
 }
 
-FrameCreature Creature::toFrameCreature() const
+FrameCreature Creature::toFrameCreature()
 {
     FrameCreature frameCreature;
     frameCreature.id = m_id;
     frameCreature.position = m_position;
     frameCreature.angle = m_angle;
     frameCreature.health = m_health;
+    frameCreature.antennaLeftPosition = getLeftAntennaPosition();
+    frameCreature.antennaRightPosition = getRightAntennaPosition();
     return frameCreature;
 }

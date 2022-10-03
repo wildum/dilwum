@@ -23,8 +23,8 @@ class Config
         static int getCREATURE_SPEED() {return CREATURE_SPEED;}
         static int getCREATURE_ROTATION_DEGREE() {return CREATURE_ROTATION_DEGREE;}
         static int getCREATURE_EATING_VALUE() {return CREATURE_EATING_VALUE;}
-        static int getCREATURE_ANTENNA_Y_OFFSET() {return CREATURE_ANTENNA_Y_OFFSET;}
-        static int getCREATURE_ANTENNA_X_OFFSET() {return CREATURE_ANTENNA_X_OFFSET;}
+        static int getCREATURE_ANTENNA_ANGLE() {return CREATURE_ANTENNA_ANGLE;}
+        static int getCREATURE_ANTENNA_LENGTH_FROM_BODY() {return CREATURE_ANTENNA_LENGTH_FROM_BODY;}
         static int getFOOD_NUMBER_MIN() {return FOOD_NUMBER_MIN;}
         static int getFOOD_NUMBER_MAX() {return FOOD_NUMBER_MAX;}
         static int getFOOD_VALUE_MIN() {return FOOD_VALUE_MIN;}
@@ -50,8 +50,8 @@ class Config
         static int CREATURE_SPEED;
         static int CREATURE_ROTATION_DEGREE;
         static int CREATURE_EATING_VALUE;
-        static int CREATURE_ANTENNA_Y_OFFSET;
-        static int CREATURE_ANTENNA_X_OFFSET;
+        static int CREATURE_ANTENNA_ANGLE;
+        static int CREATURE_ANTENNA_LENGTH_FROM_BODY;
         static int FOOD_NUMBER_MIN;
         static int FOOD_NUMBER_MAX;
         static int FOOD_VALUE_MIN;
