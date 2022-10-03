@@ -148,7 +148,7 @@ void Brain::buildConnections()
         int receiverId = (gene >> 16) & 127;
         Connection connection;
         connection.id = i;
-        connection.weight = getWeightFromGene(gene);
+        connection.weight = gene::getWeightFromGene(gene);
         for (int j = 0; j < m_nodes.size(); j++)
         {
             if (m_nodes[j].id == senderId && ((m_nodes[j].type == NeuronType::INPUT && senderType == 1) || (m_nodes[j].type == NeuronType::INTERNAL && senderType == 0)))
@@ -173,11 +173,6 @@ void Brain::buildConnections()
         }
         m_connections.push_back(connection);
     }
-}
-
-float Brain::getWeightFromGene(uint32_t gene)
-{
-    return ((gene & 65535) - 32767.5) / 8192; // weight is set between -4 and 4
 }
 
 void Brain::buildNode(int type, int id, ConnectionSide connectionSide)

@@ -20,6 +20,7 @@ namespace gene
     uint32_t generateSpecificConnectionGene(int senderType, int senderId, int receiverType, int receiverId, float weight);
     std::vector<uint32_t> correctGenome(const std::vector<uint32_t>& genome);
     std::vector<uint32_t> removeDuplicatedConnections(const std::vector<uint32_t>& genome);
+    float getWeightFromGene(uint32_t gene);
 }
 
 #endif

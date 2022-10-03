@@ -76,7 +76,6 @@ class Brain
         void buildConnections();
         void buildNodes();
         void sortConnections();
-        float getWeightFromGene(uint32_t gene);
 
         std::map<Input, float> m_inputValues;
 

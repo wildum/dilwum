@@ -78,4 +78,9 @@ namespace gene
         }
         return correctedGenome;
     }
+
+    float getWeightFromGene(uint32_t gene)
+    {
+        return ((gene & 65535) - 32767.5) / 8192; // weight is set between -4 and 4
+    }
 }

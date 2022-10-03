@@ -1,6 +1,9 @@
 #include "brainDrawer.h"
 #include "tools.h"
 #include "randomGen.h"
+#include "gene.h"
+#include <iomanip>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -125,7 +128,9 @@ void BrainDrawer::buildConnections(const std::vector<uint32_t>& genome)
         connection.text.setFont(m_font);
         connection.text.setCharacterSize(20);
         connection.text.setFillColor(sf::Color::Black);
-        connection.text.setString(std::to_string(i));
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) <<gene:: getWeightFromGene(gene);
+        connection.text.setString(stream.str());
         m_connections.push_back(connection);
     }
 }
@@ -219,7 +224,7 @@ void BrainDrawer::drawConnections(sf::RenderWindow& window)
             connection.selfConnection.setPosition(position);
             connection.selfConnection.setFillColor(sf::Color::Transparent);
             window.draw(connection.selfConnection);
-            connection.text.setPosition(position.x + 2, position.y + 2);
+            connection.text.setPosition(position.x + 3, position.y + 3);
             window.draw(connection.text);
         }
         else

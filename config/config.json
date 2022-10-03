@@ -1,7 +1,7 @@
 {
     "gameTurn" : 200,
     "turnTimeSecond" : 0.5,
-    "popNumber" : 300,
+    "popNumber" : 200,
     "genomeMaxSize" : 50,
     "internalNeuronNumberMax" : 15,
     "ga" : {
