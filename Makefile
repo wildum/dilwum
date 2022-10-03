@@ -1,6 +1,6 @@
 all: compile link clean
 
-allfast: compilefast link clean
+fast: compilefast link clean
 
 compile:
 	g++ -c -g *.cpp config/config.cpp tests/test.cpp -I"C:\SFML\SFML-2.5.1\include" -DSFML_STATIC -I"C:\boost\include\boost-1_80"

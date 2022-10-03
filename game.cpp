@@ -4,6 +4,7 @@
 #include "factory.h"
 #include "tools.h"
 #include <algorithm>
+#include <unordered_set>
 
 GameFeedback Game::run(std::vector<Creature>& population)
 {
@@ -63,6 +64,8 @@ void Game::logGameInfo(int currentGeneration)
     int survivors = 0;
     int averageTurnSurvived = 0;
     int genomeSize = 0;
+    std::unordered_set<uint32_t> genes;
+
     for (auto& creature : m_creatures)
     {
         genomeSize += creature.getBrain().getGenome().size();
@@ -75,10 +78,13 @@ void Game::logGameInfo(int currentGeneration)
         {
             averageTurnSurvived += creature.getDeadAt();
         }
+        for (auto gene : creature.getBrain().getGenome())
+            genes.insert(gene);
     }
     tools::log("Generation: " + std::to_string(currentGeneration) + ": " + std::to_string(survivors)
         + " survived, averageTurnSurvived: " + std::to_string((float) averageTurnSurvived / m_creatures.size())
-        + ", genome average size: " + std::to_string((float) genomeSize / m_creatures.size()));
+        + ", genome average size: " + std::to_string((float) genomeSize / m_creatures.size())
+        + ", genome similarity : " + std::to_string((float) genes.size() / genomeSize));
 }
 
 void Game::addFrame(std::vector<Frame>& frames)
