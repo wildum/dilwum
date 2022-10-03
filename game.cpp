@@ -36,7 +36,7 @@ GameFeedback Game::run()
         while (turn < Config::getGAME_TURN() && alive)
         {
             alive = updateCreatures(turn);
-            updateFood();
+            updateFood(turn);
             performCreaturesAction();
             
             if (lastRun)
@@ -130,8 +130,15 @@ void Game::performCreaturesAction()
     }
 }
 
-void Game::updateFood()
+void Game::updateFood(int turn)
 {
+    if (Config::getFOOD_RESPAWN_FREQUENCY() > 0)
+    {
+        if ((turn + 1) % Config::getFOOD_RESPAWN_FREQUENCY() == 0)
+        {
+            m_food.emplace_back(Factory::createRandomFood());
+        }
+    }
     m_food.erase(std::remove_if(m_food.begin(), m_food.end(), [&](auto& food){return food.isDepleted();}), m_food.end());
 }
 

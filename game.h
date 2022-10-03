@@ -18,7 +18,7 @@ private:
     void initFood();
     void initCreatures();
     bool updateCreatures(int turn);
-    void updateFood();
+    void updateFood(int turn);
     void performCreaturesAction();
     void logGameInfo(int currentGeneration);
     std::vector<Food> m_food;

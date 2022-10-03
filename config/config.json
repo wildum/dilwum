@@ -24,7 +24,8 @@
         "numberMax" : 60,
         "valueMin" : 5,
         "valueMax" : 20,
-        "radius" : 20
+        "radius" : 20,
+        "respawnFrequency" : 1
     },
     "map" : {
         "width" : 2500,

@@ -30,6 +30,7 @@ class Config
         static int getFOOD_VALUE_MIN() {return FOOD_VALUE_MIN;}
         static int getFOOD_VALUE_MAX() {return FOOD_VALUE_MAX;}
         static int getFOOD_RADIUS() {return FOOD_RADIUS;}
+        static int getFOOD_RESPAWN_FREQUENCY() {return FOOD_RESPAWN_FREQUENCY;}
         static sf::Color getBACKGROUND_COLOR() {return BACKGROUND_COLOR;}
         static sf::Color getFOOD_COLOR() {return FOOD_COLOR;}
         static float getEPSILON() {return EPSILON;}
@@ -57,6 +58,7 @@ class Config
         static int FOOD_VALUE_MIN;
         static int FOOD_VALUE_MAX;
         static int FOOD_RADIUS;
+        static int FOOD_RESPAWN_FREQUENCY; // set to 0 if no respawn
         static sf::Color BACKGROUND_COLOR;
         static sf::Color FOOD_COLOR;
         static constexpr float EPSILON = 0.000001;

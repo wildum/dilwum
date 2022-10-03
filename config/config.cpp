@@ -27,6 +27,7 @@ int Config::FOOD_NUMBER_MAX;
 int Config::FOOD_VALUE_MIN;
 int Config::FOOD_VALUE_MAX;
 int Config::FOOD_RADIUS;
+int Config::FOOD_RESPAWN_FREQUENCY;
 sf::Color Config::BACKGROUND_COLOR;
 sf::Color Config::FOOD_COLOR;
 constexpr float Config::EPSILON;
@@ -58,6 +59,7 @@ void Config::readConfig(std::string& path)
     FOOD_NUMBER_MAX = data["food"]["numberMax"];
     FOOD_VALUE_MIN = data["food"]["valueMin"];
     FOOD_VALUE_MAX = data["food"]["valueMax"];
+    FOOD_RESPAWN_FREQUENCY = data["food"]["respawnFrequency"];
     FOOD_RADIUS = data["food"]["radius"];
     auto colorArrayBackground = data["color"]["background"];
     BACKGROUND_COLOR = {colorArrayBackground[0], colorArrayBackground[1], colorArrayBackground[2]};
